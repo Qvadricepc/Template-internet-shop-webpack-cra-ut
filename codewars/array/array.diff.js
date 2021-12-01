@@ -1,7 +1,7 @@
 function arrayDiff(a, b) {
     let result = []
     for (let i=0; i<a.length; ++i) {
-        if (b.indexOf(a[i]) == -1) {
+        if (b.indexOf(a[i]) === -1) {
             result.push(a[i]);
         }
     }
