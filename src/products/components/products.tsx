@@ -3,12 +3,13 @@ import { useGetProductsQuery } from '../products-api-slice';
 import { TProduct } from '../types';
 import { Grid } from '@mui/material';
 import { ProductCard } from './product-card';
+import { Loader } from '../../common/loader';
 
 export const Products: React.FC = () => {
   const { data, isLoading, isError } = useGetProductsQuery({});
 
   if (isLoading) {
-    return <div>Loading ....</div>;
+    return <Loader />;
   }
   if (isError) {
     return <div>Error</div>;
