@@ -1,13 +1,18 @@
-import { Container, Grid, Typography } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 
 export const Error: React.FC = () => {
   return (
-    <Container maxWidth={'xl'}>
-      <Grid marginTop={'20%'}>
-        <Typography variant={'h2'} align="center">
-          Oops...... Something went wrong!!!
-        </Typography>
-      </Grid>
-    </Container>
+    <Grid>
+      <Paper
+        sx={{
+          backgroundImage:
+            'url(https://cdn.pixabay.com/photo/2017/04/09/12/45/error-2215702_960_720.png)',
+          height: '100vh',
+          backgroundRepeat: 'repeat',
+        }}
+      >
+        Error
+      </Paper>
+    </Grid>
   );
 };
