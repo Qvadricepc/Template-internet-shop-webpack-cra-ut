@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Error } from './common/error';
-import { Products } from './products/products';
+import { Products } from './products/components/products';
 import { Product } from './product/product';
 
 function App() {
