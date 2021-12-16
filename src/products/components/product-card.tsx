@@ -8,11 +8,26 @@ type TProps = {
 };
 
 export const ProductCard: React.FC<TProps> = ({ product }) => {
+  const price = Math.round(product.price - product.price * (product.discount / 100));
+
+  const hrivna = (
+    <>
+      <span style={{ marginLeft: '5px' }}>&#8372;</span>
+    </>
+  );
+
+  const discount = (
+    <>
+      <s>{product.price}</s>
+      {hrivna}
+    </>
+  );
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={2}>
       <Card elevation={4}>
         <CardHeader align="center" />
-        <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'primary' }}>
+        <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'primary' }}>
           <CardMedia
             component="img"
             image={product.thumbnail_url}
@@ -23,21 +38,10 @@ export const ProductCard: React.FC<TProps> = ({ product }) => {
             <Typography variant="h4" align="center" color="black">
               {product.name}
             </Typography>
-            {product.discount !== 0 ? (
-              <Typography color="#bdbdbd">
-                <s>{product.price} </s>
-                <span>&#8372;</span>
-              </Typography>
-            ) : (
-              <br />
-            )}
+            <Typography color="#bdbdbd">{product.discount !== 0 ? discount : null}</Typography>
             <Typography color="black" align="center">
-              <b>
-                {product.price - product.price * (product.discount / 100) !== product.price
-                  ? product.price - product.price * (product.discount / 100)
-                  : product.price}
-              </b>
-              <span style={{ marginLeft: '5px' }}>&#8372;</span>
+              <b>{price !== product.price ? price : product.price}</b>
+              {hrivna}
             </Typography>
             <Typography color="#ffd54f">{product.bestSeller ? 'Bestseller' : <br />}</Typography>
             <Typography color="#bdbdbd">

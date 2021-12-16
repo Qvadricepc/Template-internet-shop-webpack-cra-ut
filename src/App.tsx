@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Error } from './common/error';
+import { Product } from './product/components/product';
 import { Products } from './products/components/products';
-import { Product } from './product/product';
 
 function App() {
   return (
