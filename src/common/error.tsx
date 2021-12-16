@@ -1,4 +1,5 @@
 import { Grid, Paper } from '@mui/material';
+import React from 'react';
 
 export const Error: React.FC = () => {
   return (
