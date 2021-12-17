@@ -14,6 +14,10 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+const Hrivna = styled('span')({
+  marginLeft: '5px',
+});
+
 export const Product: React.FC = () => {
   const params = useParams();
   const productId = params.id as string;
@@ -36,12 +40,12 @@ export const Product: React.FC = () => {
         {data.name}
       </Typography>
       <Grid container spacing={2} display="flex">
-        <Grid item sx={{ marginTop: '30px' }}>
+        <Grid item sx={{ marginTop: '3vh' }} alignItems="center">
           <Item>
-            <img src={data.image_url} alt="Product" height={'400px'} width={'450px'} />
+            <img src={data.image_url} alt="Product" height={'400px'} width={'400px'} />
           </Item>
         </Grid>
-        <Grid item sx={{ marginTop: '30px', flexGrow: 1 }}>
+        <Grid item sx={{ marginTop: '3vh', flexGrow: 1 }}>
           <Grid item>
             <Button
               variant="outlined"
@@ -58,12 +62,12 @@ export const Product: React.FC = () => {
           <Typography variant="h5" sx={{ textAlign: 'center' }}>
             {data.available ? 'Availabe' : 'Not available'}
           </Typography>
-          <Grid item sx={{ marginTop: '100px' }}>
+          <Grid item sx={{ marginTop: '15vh' }}>
             <Item>
               <Grid display="flex" justifyContent="space-between">
                 <Typography color="black" align="center">
                   <b>{discount !== data.price ? discount : data.price}</b>
-                  <span>&#8372;</span>
+                  <Hrivna>&#8372;</Hrivna>
                 </Typography>
                 <Typography color="black" align="center">
                   {data.runningOut && data.available ? 'Running Out' : null}
@@ -74,7 +78,7 @@ export const Product: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container display="flex" sx={{ marginTop: '40px' }}>
+      <Grid container display="flex" sx={{ marginTop: '4vh' }}>
         <Grid item xs={12} lg={6}>
           <Paper style={{ padding: '40px 20px' }}>
             <Typography>
