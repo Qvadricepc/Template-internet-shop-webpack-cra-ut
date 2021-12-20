@@ -20,9 +20,11 @@ export const Products: React.FC = () => {
 
   return (
     <Grid container spacing={3}>
-      {data.map((product: TProduct) => {
-        return <ProductCard product={product} key={product.id} />;
-      })}
+      {data
+        //.filter((category: TProduct) => category.category === 'electronics')
+        .map((product: TProduct) => {
+          return <ProductCard product={product} key={product.id} />;
+        })}
     </Grid>
   );
 };

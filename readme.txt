@@ -8,7 +8,7 @@ products : JG.repeat(100, {
         category: JG.random('electronics', 'clothes', 'food', 'toys'),
         bestSeller: JG.bool(),
         runningOut: JG.bool(),
-        discount: JG.random(5, 10, 15),
+        discount: JG.random(0, 5, 10, 15),
         thumbnail_url: 'https://picsum.photos/seed/' + JG.index() + '/210/210',
         image_url: 'https://picsum.photos/seed/' + JG.index() + '/620/620',
         description: JG.loremIpsum({units: 'words', count: 30}),
