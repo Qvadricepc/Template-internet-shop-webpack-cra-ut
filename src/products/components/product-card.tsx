@@ -40,6 +40,7 @@ export const ProductCard: React.FC<TProps> = ({ product }) => {
             <Typography variant="h4" align="center" color="black">
               {product.name}
             </Typography>
+            <Typography color="primary">Category: {product.category}</Typography>
             <Typography color="#bdbdbd">
               {product.discount !== 0 ? discount : <Empty>discount</Empty>}
             </Typography>
