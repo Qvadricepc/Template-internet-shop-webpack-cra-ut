@@ -6,9 +6,11 @@ import { ProductCard } from './product-card';
 import { Loader } from '../../common/loader';
 import { useAppSelector } from '../../app/hooks';
 import { selectCategory } from '../../layout/drawer-slice';
+import { selectSearch } from '../../layout/search-slice';
 
 export const Products: React.FC = () => {
   const pickedCategory = useAppSelector(selectCategory);
+  const search = useAppSelector(selectSearch);
   const { data, isLoading, isError } = useGetProductsQuery({});
 
   if (isLoading) {
@@ -27,6 +29,7 @@ export const Products: React.FC = () => {
         .filter((cat: TProduct) =>
           pickedCategory === 'All products' ? true : cat.category === pickedCategory.toLowerCase()
         )
+        .filter((searchName: TProduct) => searchName.name.toLowerCase().includes(search))
         .map((product: TProduct) => {
           return <ProductCard product={product} key={product.id} />;
         })}
