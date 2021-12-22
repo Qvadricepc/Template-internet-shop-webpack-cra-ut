@@ -1,12 +1,26 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { productsApiSlice } from '../products/products-api-slice';
 import { productApiSlice } from '../product/product-api-slice';
+import drawerReducer from '../layout/drawer-slice';
+
+let enhancers;
+
+// @ts-ignore
+if (process.env.NODE_ENV === 'development') {
+  const {
+    reactotron,
+    // eslint-disable-next-line global-require
+  } = require('./reactotron-config');
+  enhancers = [reactotron.createEnhancer()];
+}
 
 export const store = configureStore({
   reducer: {
     [productsApiSlice.reducerPath]: productsApiSlice.reducer,
     [productApiSlice.reducerPath]: productApiSlice.reducer,
+    drawer: drawerReducer,
   },
+  enhancers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(productsApiSlice.middleware).concat(productApiSlice.middleware),
 });
