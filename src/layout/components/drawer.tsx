@@ -25,7 +25,6 @@ export const SwipeableTemporaryDrawer = () => {
   const [state, setState] = React.useState({
     left: false,
   });
-  //const [category, setCategory] = useState('');
 
   const menuItems = [
     {
