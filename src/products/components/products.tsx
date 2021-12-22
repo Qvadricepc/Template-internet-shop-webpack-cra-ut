@@ -4,8 +4,11 @@ import { TProduct } from '../types';
 import { Grid } from '@mui/material';
 import { ProductCard } from './product-card';
 import { Loader } from '../../common/loader';
+import { useAppSelector } from '../../app/hooks';
+import { selectCategory } from '../../layout/drawer-slice';
 
 export const Products: React.FC = () => {
+  const pickedCategory = useAppSelector(selectCategory);
   const { data, isLoading, isError } = useGetProductsQuery({});
 
   if (isLoading) {
@@ -21,7 +24,9 @@ export const Products: React.FC = () => {
   return (
     <Grid container spacing={3}>
       {data
-        //.filter((category: TProduct) => category.category === 'electronics')
+        .filter((cat: TProduct) =>
+          pickedCategory === 'All products' ? true : cat.category === pickedCategory.toLowerCase()
+        )
         .map((product: TProduct) => {
           return <ProductCard product={product} key={product.id} />;
         })}

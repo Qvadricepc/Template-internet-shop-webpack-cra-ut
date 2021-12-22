@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Error } from './common/error';
 import { Product } from './product/components/product';
 import { Products } from './products/components/products';
-import { Layout } from './layout/layout';
+import { Layout } from './layout/components/layout';
 
 function App() {
   return (
