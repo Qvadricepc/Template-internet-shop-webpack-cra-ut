@@ -170,7 +170,7 @@ export const Appbar = () => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex' }}>
             <Link to="/cart">
-              <IconButton size="large" sx={{ color: '#e0e0e0' }}>
+              <IconButton size="large" sx={{ color: '#e0e0e0' }} onClick={() => navigate('/cart')}>
                 <Badge badgeContent={4}>
                   <ShoppingCartIcon />
                 </Badge>

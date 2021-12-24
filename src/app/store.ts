@@ -3,6 +3,7 @@ import { productsApiSlice } from '../products/products-api-slice';
 import { productApiSlice } from '../product/product-api-slice';
 import drawerReducer from '../layout/drawer-slice';
 import searchReducer from '../layout/search-slice';
+import { cartApiSlice } from '../cart/cart-api-slice';
 
 let enhancers;
 
@@ -19,12 +20,16 @@ export const store = configureStore({
   reducer: {
     [productsApiSlice.reducerPath]: productsApiSlice.reducer,
     [productApiSlice.reducerPath]: productApiSlice.reducer,
+    [cartApiSlice.reducerPath]: cartApiSlice.reducer,
     drawer: drawerReducer,
     search: searchReducer,
   },
   enhancers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(productsApiSlice.middleware).concat(productApiSlice.middleware),
+    getDefaultMiddleware()
+      .concat(productsApiSlice.middleware)
+      .concat(productApiSlice.middleware)
+      .concat(cartApiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
