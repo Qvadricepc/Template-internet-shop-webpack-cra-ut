@@ -1,15 +1,32 @@
 import React from 'react';
-import { useGetCartProductsQuery, useGetCartQuery } from '../cart-api-slice';
+import {
+  useGetCartProductsQuery,
+  useGetCartQuery,
+  useRemoveFromCartMutation,
+} from '../cart-api-slice';
 import { Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { TProduct } from '../../products/types';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../../common/loader';
+import { Error } from '../../common/error';
+import { BasicModal } from './modal';
 
 export const Cart = () => {
   const navigate = useNavigate();
+  const userId = '1';
   const cart = useGetCartQuery('1');
   const products = useGetCartProductsQuery({
     productsId: cart.data,
   });
+  const [deleteItem, { isLoading, isError }] = useRemoveFromCartMutation();
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
 
   return (
     <Container maxWidth="xl">
@@ -39,7 +56,21 @@ export const Cart = () => {
                   <Typography>{product.name}</Typography>
                 </Grid>
                 <Grid width={'25%'}>
-                  <Button variant="contained" color="error" onClick={() => console.log('Delete')}>
+                  <Typography>{product.price} &#8372;</Typography>
+                </Grid>
+                <Grid width={'25%'}>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      deleteItem({
+                        userId,
+                        productsId: cart.data!.filter((id) => {
+                          return String(id) !== String(product.id);
+                        }),
+                      });
+                    }}
+                  >
                     DELETE
                   </Button>
                 </Grid>
@@ -64,24 +95,29 @@ export const Cart = () => {
             sx={{
               backgroundColor: '#b9f6ca',
               height: '60px',
-              width: '220px',
+              width: '300px',
               border: '1px solid black',
               marginTop: '20px',
             }}
           >
             <Grid>
-              <Typography>Price </Typography>
+              <Typography>
+                Total:{' '}
+                {products.data?.length !== 0
+                  ? products.data &&
+                    products
+                      .data!.map((product: TProduct) => {
+                        return product.price;
+                      })
+                      .reduce((prev: number, next: number) => {
+                        return prev + next;
+                      })
+                  : 0}{' '}
+                &#8372;
+              </Typography>
             </Grid>
             <Grid>
-              <Button
-                variant="contained"
-                color="success"
-                onClick={() => {
-                  console.log('Purchase order');
-                }}
-              >
-                Purchase order
-              </Button>
+              <BasicModal />
             </Grid>
           </Grid>
         </Grid>

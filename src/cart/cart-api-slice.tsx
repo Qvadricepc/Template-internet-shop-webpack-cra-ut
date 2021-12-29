@@ -11,7 +11,7 @@ export const cartApiSlice = createApi({
       async queryFn(_arg, _queriApi, _extraOptions, fetchWithBQ) {
         const cart = await fetchWithBQ(`/cart/${_arg}`);
 
-        if (cart.error) {
+        if (cart.error && cart.error.status === 404) {
           throw cart.error;
         }
 
@@ -58,7 +58,24 @@ export const cartApiSlice = createApi({
 
       invalidatesTags: (result, error, { userId }) => [{ type: 'Cart', id: userId }],
     }),
+
+    removeFromCart: builder.mutation({
+      query: ({ userId, productsId }: { userId: string; productsId: string[] }) => ({
+        url: `/cart/${userId}`,
+        method: 'PUT',
+        body: {
+          productsId,
+        },
+      }),
+
+      invalidatesTags: (result, error, { userId }) => [{ type: 'Cart', id: userId }, 'Product'],
+    }),
   }),
 });
 
-export const { useAddToCartMutation, useGetCartQuery, useGetCartProductsQuery } = cartApiSlice;
+export const {
+  useAddToCartMutation,
+  useGetCartQuery,
+  useGetCartProductsQuery,
+  useRemoveFromCartMutation,
+} = cartApiSlice;
