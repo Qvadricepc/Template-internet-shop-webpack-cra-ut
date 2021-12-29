@@ -6,7 +6,7 @@ import { Button, Container, Grid, Paper, styled, Typography } from '@mui/materia
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Comments } from '../../common/comments';
 import { Breadcrumb } from '../../common/breadcrumbs';
-import { useAddToCartMutation } from '../../cart/cart-api-slice';
+import { useAddToCartMutation, useGetCartQuery } from '../../cart/cart-api-slice';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -21,10 +21,11 @@ const Hrivna = styled('span')({
 
 export const Product: React.FC = () => {
   const params = useParams();
+  const userId = '1';
   const productId = params.id as string;
   const { data, isLoading, isError } = useGetProductQuery(productId);
   const [addToCart] = useAddToCartMutation();
-  const userId = '1';
+  const cart = useGetCartQuery(userId);
 
   if (isLoading) {
     return <Loader />;
@@ -58,7 +59,7 @@ export const Product: React.FC = () => {
                 console.log('ADD to cart');
                 addToCart({
                   userId,
-                  productsId: [productId],
+                  productsId: [...(cart.data || []), productId],
                 });
               }}
               disabled={!data.available}

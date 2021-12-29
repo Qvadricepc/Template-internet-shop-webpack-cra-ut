@@ -20,6 +20,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { SwipeableTemporaryDrawer } from './drawer';
 import { useAppDispatch } from '../../app/hooks';
 import { searchpick } from '../search-slice';
+import { useGetCartQuery } from '../../cart/cart-api-slice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,6 +66,7 @@ export const Appbar = () => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const cartItems = useGetCartQuery('1');
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -170,8 +172,8 @@ export const Appbar = () => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex' }}>
             <Link to="/cart">
-              <IconButton size="large" sx={{ color: '#e0e0e0' }} onClick={() => navigate('/cart')}>
-                <Badge badgeContent={4}>
+              <IconButton size="large" sx={{ color: '#e0e0e0' }}>
+                <Badge badgeContent={cartItems.data?.length} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
