@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
+import { useRemoveCartMutation } from '../cart-api-slice';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -26,6 +27,7 @@ export const BasicModal: React.FC<TProps> = ({ disabled }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
+  const [removeCart] = useRemoveCartMutation();
 
   return (
     <>
@@ -53,6 +55,9 @@ export const BasicModal: React.FC<TProps> = ({ disabled }) => {
             <Button
               variant="outlined"
               onClick={() => {
+                removeCart({
+                  userId: '1',
+                });
                 navigate('/');
               }}
             >

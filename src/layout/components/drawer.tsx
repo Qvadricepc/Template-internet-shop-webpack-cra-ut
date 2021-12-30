@@ -17,10 +17,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import { useAppDispatch } from '../../app/hooks';
 import { menupick } from '../drawer-slice';
+import { useNavigate } from 'react-router-dom';
 
 type Anchor = 'left';
 
 export const SwipeableTemporaryDrawer = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [state, setState] = React.useState({
     left: false,
@@ -80,7 +82,14 @@ export const SwipeableTemporaryDrawer = () => {
     >
       <List>
         {menuItems.map((item) => (
-          <ListItem key={item.text} button onClick={() => dispatch(menupick(item.text))}>
+          <ListItem
+            key={item.text}
+            button
+            onClick={() => {
+              dispatch(menupick(item.text));
+              navigate('/');
+            }}
+          >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText color="primary">{item.text}</ListItemText>
           </ListItem>

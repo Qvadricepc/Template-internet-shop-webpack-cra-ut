@@ -1,9 +1,7 @@
 {
   "cart": [
     {
-      "productsId": [
-        "3"
-      ],
+      "productsIds": [],
       "id": "1"
     }
   ],
