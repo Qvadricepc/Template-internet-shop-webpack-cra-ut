@@ -70,6 +70,20 @@ export const cartApiSlice = createApi({
 
       invalidatesTags: (result, error, { userId }) => [{ type: 'Cart', id: userId }, 'Product'],
     }),
+
+    removeCart: builder.mutation({
+      query: ({ userId }: { userId: string }) => ({
+        url: `/cart/${userId}`,
+        method: 'PUT',
+        body: {
+          productsIds: [],
+        },
+      }),
+      invalidatesTags: (result, error, { userId }) => [
+        { type: 'Cart', id: userId },
+        { type: 'Product', id: userId },
+      ],
+    }),
   }),
 });
 
@@ -78,4 +92,5 @@ export const {
   useGetCartQuery,
   useGetCartProductsQuery,
   useRemoveFromCartMutation,
+  useRemoveCartMutation,
 } = cartApiSlice;

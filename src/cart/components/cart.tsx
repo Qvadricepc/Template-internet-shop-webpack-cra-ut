@@ -117,7 +117,7 @@ export const Cart = () => {
               </Typography>
             </Grid>
             <Grid>
-              <BasicModal />
+              <BasicModal disabled={!products.data || products.data?.length === 0} />
             </Grid>
           </Grid>
         </Grid>

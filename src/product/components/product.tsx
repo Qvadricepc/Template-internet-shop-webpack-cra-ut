@@ -44,7 +44,7 @@ export const Product: React.FC = () => {
         {data.name}
       </Typography>
       <Grid container spacing={2} display="flex">
-        <Grid item sx={{ marginTop: '3vh' }} alignItems="center">
+        <Grid item sx={{ marginTop: '3vh' }}>
           <Item>
             <img src={data.image_url} alt="Product" height={'400px'} width={'400px'} />
           </Item>
@@ -56,7 +56,6 @@ export const Product: React.FC = () => {
               size="large"
               startIcon={<ShoppingBasketIcon />}
               onClick={() => {
-                console.log('ADD to cart');
                 addToCart({
                   userId,
                   productsId: [...(cart.data || []), productId],
@@ -67,10 +66,13 @@ export const Product: React.FC = () => {
               BUY
             </Button>
           </Grid>
-          <Typography variant="h5" sx={{ textAlign: 'center' }}>
-            {data.available ? 'Availabe' : 'Not available'}
+          <Typography
+            variant="h5"
+            sx={{ textAlign: 'center', marginTop: { md: '5vh', xs: '2vh' } }}
+          >
+            {data.available ? 'Available' : 'Not available'}
           </Typography>
-          <Grid item sx={{ marginTop: '15vh' }}>
+          <Grid item sx={{ marginTop: { md: '15vh', xs: '3vh' } }}>
             <Item>
               <Grid display="flex" justifyContent="space-between">
                 <Typography color="black" align="center">
@@ -86,9 +88,9 @@ export const Product: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container display="flex" sx={{ marginTop: '4vh' }}>
+      <Grid container display="flex" sx={{ marginTop: '4vh' }} spacing={1}>
         <Grid item xs={12} lg={6}>
-          <Paper style={{ padding: '40px 20px' }}>
+          <Item sx={{ textAlign: 'left' }}>
             <Typography>
               <b>Description: </b>
               {data.description}
@@ -105,12 +107,14 @@ export const Product: React.FC = () => {
               <b>Trader: </b>
               {data.trader}
             </Typography>
-          </Paper>
+          </Item>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <Typography variant={'h2'} align="center">
-            <Comments />
-          </Typography>
+          <Item>
+            <Typography variant={'h2'} align="center">
+              <Comments />
+            </Typography>
+          </Item>
         </Grid>
       </Grid>
     </Container>

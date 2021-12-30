@@ -166,7 +166,10 @@ export const Appbar = () => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              onChange={(e) => dispatch(searchpick(e.currentTarget.value))}
+              onChange={(e) => {
+                dispatch(searchpick(e.currentTarget.value));
+                navigate('/');
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
