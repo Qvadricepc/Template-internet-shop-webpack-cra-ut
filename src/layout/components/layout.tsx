@@ -9,7 +9,7 @@ export const Layout: React.FC<TProps> = ({ children }) => {
   return (
     <>
       <Appbar />
-      <div>{children}</div>
+      <>{children}</>
     </>
   );
 };
