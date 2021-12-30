@@ -38,7 +38,7 @@ export const Product: React.FC = () => {
   const discount: number = Math.round(data.price - data.price * (data.discount / 100));
 
   return (
-    <Container maxWidth={'xl'}>
+    <Container maxWidth={'xl'} sx={{ backgroundColor: '#e6ee9c' }}>
       <Breadcrumb {...data} />
       <Typography variant="h3" align="center">
         {data.name}
