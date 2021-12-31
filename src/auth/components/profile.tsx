@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Button,
   Container,
+  FormControl,
   Grid,
   InputLabel,
   MenuItem,
@@ -35,55 +36,45 @@ export const Profile = () => {
           </Grid>
         </Grid>
         <Grid>
-          <Grid justifyContent="space-around" display="flex">
+          <Grid justifyContent="space-around" display="flex" marginTop="5px">
             <Grid>
               <TextField type="text" label="Name" value="User Name" placeholder="Name" />
             </Grid>
             <Grid>
               <TextField type="text" label="Surname" value="Surname" placeholder="Surname" />
             </Grid>
-            <Grid>
-              <TextField type="text" label="Sex" value="Sex" placeholder="Sex" />
-            </Grid>
           </Grid>
         </Grid>
         <Grid justifyContent="space-around" display="flex" sx={{ marginTop: '20px' }}>
           <Grid>
-            <TextField
-              id="date"
-              label="Birthday"
-              type="date"
-              defaultValue="2017-05-24"
-              sx={{ width: 220 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <TextField id="date" label="Birthday" type="date" defaultValue="2017-05-24" />
           </Grid>
-          <Grid>
-            <InputLabel>Language</InputLabel>
-            <Select label="Language" autoWidth defaultValue={1}>
-              <MenuItem value={1}>Ukraine</MenuItem>
-              <MenuItem value={2}>English</MenuItem>
-              <MenuItem value={3}>Jedi</MenuItem>
-            </Select>
+          <Grid width="208px">
+            <FormControl fullWidth>
+              <InputLabel>Language</InputLabel>
+              <Select label="Language" defaultValue={3}>
+                <MenuItem value={1}>Ukraine</MenuItem>
+                <MenuItem value={2}>English</MenuItem>
+                <MenuItem value={3}>Jedi</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Grid
           display="flex"
           justifyContent="space-between"
           borderTop={'2px solid black'}
-          marginTop={'5px'}
+          marginTop={'10px'}
         >
           <Grid display="flex" alignItems="center">
             <AccountCircleRoundedIcon />
-            <Typography alignItems="center" marginLeft="10px">
+            <Typography alignItems="center" marginLeft="10px" marginTop="10px">
               Contact data
             </Typography>
           </Grid>
         </Grid>
         <Grid>
-          <Grid justifyContent="space-around" display="flex">
+          <Grid justifyContent="space-around" display="flex" marginTop="5px">
             <Grid>
               <TextField type="text" label="Email" value="email" placeholder="Email" />
             </Grid>
@@ -97,22 +88,21 @@ export const Profile = () => {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid
           display="flex"
           justifyContent="space-between"
-          marginTop={'5px'}
+          marginTop={'10px'}
           borderTop={'2px solid black'}
         >
           <Grid display="flex" alignItems="center">
             <AccountCircleRoundedIcon />
-            <Typography alignItems="center" marginLeft="10px">
+            <Typography alignItems="center" marginLeft="10px" marginTop="10px">
               Registration info
             </Typography>
           </Grid>
         </Grid>
         <Grid>
-          <Grid justifyContent="space-around" display="flex">
+          <Grid justifyContent="space-around" display="flex" marginTop="5px">
             <Grid>
               <TextField
                 type="text"
@@ -137,7 +127,6 @@ export const Profile = () => {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid sx={{ marginTop: '35px' }} justifyContent="space-between" display="flex">
           <Button
             variant="outlined"

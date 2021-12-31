@@ -6,6 +6,8 @@ import { Products } from './products/components/products';
 import { Layout } from './layout/components/layout';
 import { Cart } from './cart/components/cart';
 import { Profile } from './auth/components/profile';
+import { Signin } from './auth/components/signin';
+import { Signup } from './auth/components/signup';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/products/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </Layout>
