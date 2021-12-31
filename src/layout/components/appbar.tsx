@@ -98,10 +98,10 @@ export const Appbar = () => {
       <MenuItem
         onClick={() => {
           handleMenuClose();
-          navigate('/login');
+          navigate('/signin');
         }}
       >
-        Login
+        Sign in
       </MenuItem>
       <MenuItem
         onClick={() => {
