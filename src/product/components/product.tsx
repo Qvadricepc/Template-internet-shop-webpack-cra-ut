@@ -38,7 +38,7 @@ export const Product: React.FC = () => {
   const discount: number = Math.round(data.price - data.price * (data.discount / 100));
 
   return (
-    <Container maxWidth={'xl'} sx={{ backgroundColor: '#e6ee9c' }}>
+    <Container maxWidth={'xl'} sx={{ backgroundColor: '#e8eaf6' }}>
       <Breadcrumb {...data} />
       <Typography variant="h3" align="center">
         {data.name}
@@ -52,7 +52,7 @@ export const Product: React.FC = () => {
         <Grid item sx={{ marginTop: '3vh', flexGrow: 1 }}>
           <Grid item>
             <Button
-              variant="outlined"
+              variant="contained"
               size="large"
               startIcon={<ShoppingBasketIcon />}
               onClick={() => {

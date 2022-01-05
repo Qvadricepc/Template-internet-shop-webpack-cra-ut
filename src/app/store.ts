@@ -4,6 +4,7 @@ import { productApiSlice } from '../product/product-api-slice';
 import drawerReducer from '../layout/drawer-slice';
 import searchReducer from '../layout/search-slice';
 import { cartApiSlice } from '../cart/cart-api-slice';
+import authReducer from '../auth/auth-slice';
 
 let enhancers;
 
@@ -23,6 +24,7 @@ export const store = configureStore({
     [cartApiSlice.reducerPath]: cartApiSlice.reducer,
     drawer: drawerReducer,
     search: searchReducer,
+    auth: authReducer,
   },
   enhancers,
   middleware: (getDefaultMiddleware) =>

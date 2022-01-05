@@ -24,7 +24,7 @@ export const Products: React.FC = () => {
   }
 
   return (
-    <Grid container spacing={3} bgcolor="#b388ff">
+    <Grid container spacing={3} bgcolor="#e8eaf6">
       {data
         .filter((cat: TProduct) =>
           pickedCategory === 'All products' ? true : cat.category === pickedCategory.toLowerCase()
