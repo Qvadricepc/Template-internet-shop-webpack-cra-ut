@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+
+import { getUserAsync, selectUser } from '../auth-slice';
 
 export const Signin = () => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
+  const [formData, setFormData] = useState<{ login?: string; password?: string }>({
+    login: '',
+    password: '',
+  });
+
   return (
     <Grid container direction="column">
       <Paper
@@ -23,8 +33,13 @@ export const Signin = () => {
             type="text"
             label="Login"
             placeholder="Login"
-            value="Login"
-            onChange={() => console.log('Login')}
+            value={formData.login}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                login: e.currentTarget.value,
+              })
+            }
             fullWidth
             required
           />
@@ -34,14 +49,32 @@ export const Signin = () => {
             label="Password"
             type="password"
             placeholder="Password"
-            value="Password"
-            onChange={() => console.log('Password')}
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                password: e.currentTarget.value,
+              })
+            }
             fullWidth
             required
           />
         </Grid>
         <Grid item sx={{ paddingTop: '20px' }}>
-          <Button variant="contained" fullWidth onChange={() => console.log('Sign in')}>
+          <Button
+            disabled={!formData.login || !formData.password || user.isLoading}
+            variant="contained"
+            fullWidth
+            onClick={async () => {
+              console.log('login');
+              await dispatch(
+                getUserAsync({
+                  login: formData.login!,
+                  password: formData.password!,
+                })
+              );
+            }}
+          >
             Sign in
           </Button>
         </Grid>

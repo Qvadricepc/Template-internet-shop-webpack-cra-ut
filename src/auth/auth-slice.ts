@@ -1,0 +1,58 @@
+import { TState } from './auth-types';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../app/store';
+
+export const initialState: TState = {
+  user: {
+    isLoading: false,
+    isError: false,
+  },
+};
+
+export const getUserAsync = createAsyncThunk(
+  'auth/fetchUser',
+  async ({ login, password }: { login: string; password: string }) => {
+    const response = await fetch(`/users?login=${login}&password=${password}`);
+    const asJson = await response.json();
+    const user = asJson[0];
+
+    if (!user) {
+      throw new Error('No user found');
+    }
+
+    return user;
+  }
+);
+
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    logout(state) {
+      state.user = initialState.user;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserAsync.pending, (state) => {
+        state.user.isLoading = true;
+      })
+      .addCase(getUserAsync.fulfilled, (state, action) => {
+        state.user.isLoading = false;
+        state.user.isError = false;
+        state.user.data = action.payload;
+      })
+      .addCase(getUserAsync.rejected, (state, action) => {
+        state.user.isLoading = false;
+        state.user.isError = true;
+        state.user.data = undefined;
+      });
+  },
+});
+
+export const { logout } = authSlice.actions;
+
+export const selectAuth = (state: RootState) => state.auth;
+export const selectUser = (state: RootState) => selectAuth(state).user;
+
+export default authSlice.reducer;
