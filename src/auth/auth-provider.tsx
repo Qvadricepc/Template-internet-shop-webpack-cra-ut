@@ -8,12 +8,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
   const logoutAction = () => dispatch(logout());
 
-  useEffect(() => {
-    if (user.data) {
-      dispatch(getUserAsync(user.data));
-    }
-  }, []);
-
   return (
     <AuthContext.Provider value={{ user, logout: logoutAction }}>{children}</AuthContext.Provider>
   );

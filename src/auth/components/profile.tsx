@@ -26,12 +26,6 @@ export const Profile = () => {
   const [form, setForm] = useState<TUser>(user.data! || {});
   const [edit, setEdit] = useState(true);
 
-  useEffect(() => {
-    if (user.data) {
-      dispatch(getUserAsync(user.data));
-    }
-  }, [setForm]);
-
   return (
     <Container maxWidth="xl">
       <Paper elevation={10} sx={{ padding: '20px', margin: '30px auto' }}>
@@ -206,6 +200,7 @@ export const Profile = () => {
             onClick={async () => {
               await dispatch(updateUserAsync(form));
               setEdit(true);
+              await dispatch(getUserAsync(user.data!));
             }}
           >
             Update

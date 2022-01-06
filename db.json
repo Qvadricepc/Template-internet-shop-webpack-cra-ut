@@ -4,7 +4,7 @@
       "id": 1,
       "login": "admin",
       "password": 1111,
-      "name": "Roma",
+      "name": "Roman",
       "surname": "Sirman",
       "birthday": "1987-10-26",
       "email": "roman.sirmanov@intellectsoft@gmail.com",
@@ -15,7 +15,7 @@
   "cart": [
     {
       "id": "0",
-      "productsId" : []
+      "productsId": []
     },
     {
       "productsId": [
