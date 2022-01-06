@@ -1,13 +1,13 @@
 export type TUser = {
   id: string;
   login: string;
-  password: number;
+  password: string;
   name?: string;
   surname?: string;
   birthday?: string | undefined;
   language?: string;
   email?: string;
-  phonenumber?: string;
+  phoneNumber?: string;
 };
 
 export type TState = {

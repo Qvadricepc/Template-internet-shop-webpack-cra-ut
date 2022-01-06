@@ -56,7 +56,10 @@ export const cartApiSlice = createApi({
         },
       }),
 
-      invalidatesTags: (result, error, { userId }) => [{ type: 'Cart', id: userId }],
+      invalidatesTags: (result, error, { userId }) => [
+        { type: 'Cart', id: userId },
+        { type: 'Product', id: userId },
+      ],
     }),
 
     removeFromCart: builder.mutation({

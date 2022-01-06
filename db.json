@@ -3,12 +3,27 @@
     {
       "id": 1,
       "login": "admin",
-      "password": 1111
+      "password": 1111,
+      "name": "Roma",
+      "surname": "Sirman",
+      "birthday": "1987-10-26",
+      "email": "roman.sirmanov@intellectsoft@gmail.com",
+      "phoneNumber": "096-629-19-00",
+      "language": 2
     }
   ],
   "cart": [
     {
-      "productsIds": [],
+      "id": "0",
+      "productsId" : []
+    },
+    {
+      "productsId": [
+        "5",
+        "6",
+        "10",
+        "16"
+      ],
       "id": "1"
     }
   ],

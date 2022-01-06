@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -8,14 +8,30 @@ import {
   MenuItem,
   Paper,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../hooks/use-user';
+import { TUser } from '../auth-types';
+import { getUserAsync, updateUserAsync } from '../auth-slice';
+import { useAppDispatch } from '../../app/hooks';
 
 export const Profile = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useUser();
+  const [form, setForm] = useState<TUser>(user.data! || {});
+  const [edit, setEdit] = useState(true);
+
+  useEffect(() => {
+    if (user.data) {
+      dispatch(getUserAsync(user.data));
+    }
+  }, [setForm]);
+
   return (
     <Container maxWidth="xl">
       <Paper elevation={10} sx={{ padding: '20px', margin: '30px auto' }}>
@@ -30,7 +46,7 @@ export const Profile = () => {
             </Typography>
           </Grid>
           <Grid>
-            <Button variant="text" onClick={() => console.log('Edit')}>
+            <Button variant="text" onClick={() => setEdit(false)}>
               Edit
             </Button>
           </Grid>
@@ -38,21 +54,55 @@ export const Profile = () => {
         <Grid>
           <Grid justifyContent="space-around" display="flex" marginTop="5px">
             <Grid>
-              <TextField type="text" label="Name" value="User Name" placeholder="Name" />
+              <TextField
+                type="text"
+                disabled={edit}
+                label="Name"
+                value={form.name}
+                placeholder="Name"
+                onChange={(e) => {
+                  setForm({ ...form, name: e.currentTarget.value });
+                }}
+              />
             </Grid>
             <Grid>
-              <TextField type="text" label="Surname" value="Surname" placeholder="Surname" />
+              <TextField
+                type="text"
+                disabled={edit}
+                label="Surname"
+                value={form.surname}
+                placeholder="Surname"
+                onChange={(e) => {
+                  setForm({ ...form, surname: e.currentTarget.value });
+                }}
+              />
             </Grid>
           </Grid>
         </Grid>
         <Grid justifyContent="space-around" display="flex" sx={{ marginTop: '20px' }}>
           <Grid>
-            <TextField id="date" label="Birthday" type="date" defaultValue="2017-05-24" />
+            <TextField
+              id="date"
+              label="Birthday"
+              disabled={edit}
+              type="date"
+              value={form.birthday}
+              onChange={(e) => {
+                setForm({ ...form, birthday: e.currentTarget.value });
+              }}
+            />
           </Grid>
           <Grid width="208px">
             <FormControl fullWidth>
               <InputLabel>Language</InputLabel>
-              <Select label="Language" defaultValue={3}>
+              <Select
+                disabled={edit}
+                label="Language"
+                value={form.language}
+                onChange={(e: SelectChangeEvent) => {
+                  setForm({ ...form, language: e.target.value });
+                }}
+              >
                 <MenuItem value={1}>Ukraine</MenuItem>
                 <MenuItem value={2}>English</MenuItem>
                 <MenuItem value={3}>Jedi</MenuItem>
@@ -76,14 +126,27 @@ export const Profile = () => {
         <Grid>
           <Grid justifyContent="space-around" display="flex" marginTop="5px">
             <Grid>
-              <TextField type="text" label="Email" value="email" placeholder="Email" />
+              <TextField
+                type="text"
+                disabled={edit}
+                label="Email"
+                value={form.email}
+                placeholder="Email"
+                onChange={(e) => {
+                  setForm({ ...form, email: e.currentTarget.value });
+                }}
+              />
             </Grid>
             <Grid>
               <TextField
                 type="text"
+                disabled={edit}
                 label="Phone number"
                 placeholder="Phone number"
-                value="Phone number"
+                value={form.phoneNumber}
+                onChange={(e) => {
+                  setForm({ ...form, phoneNumber: e.currentTarget.value });
+                }}
               />
             </Grid>
           </Grid>
@@ -106,8 +169,9 @@ export const Profile = () => {
             <Grid>
               <TextField
                 type="text"
+                disabled={edit}
                 label="Login"
-                value="login"
+                value={form.login}
                 placeholder="Login"
                 onChange={() => {
                   console.log('enter login');
@@ -117,8 +181,9 @@ export const Profile = () => {
             <Grid>
               <TextField
                 type="Password"
+                disabled={edit}
                 label="Password"
-                value="password"
+                value={form.password}
                 placeholder="Password"
                 onChange={() => {
                   console.log('enter password');
@@ -136,7 +201,13 @@ export const Profile = () => {
           >
             Back to store
           </Button>
-          <Button variant="contained" onClick={() => console.log('Update')}>
+          <Button
+            variant="contained"
+            onClick={async () => {
+              await dispatch(updateUserAsync(form));
+              setEdit(true);
+            }}
+          >
             Update
           </Button>
         </Grid>
