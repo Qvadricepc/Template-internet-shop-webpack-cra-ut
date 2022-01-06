@@ -24,6 +24,42 @@ export const getUserAsync = createAsyncThunk(
   }
 );
 
+export const updateUserAsync = createAsyncThunk(
+  'auth/updateUser',
+  async (params: {
+    id: string;
+    login: string;
+    password: string;
+    name?: string;
+    surname?: string;
+    birthday?: string | undefined;
+    language?: string;
+    email?: string;
+    phoneNumber?: string;
+  }) => {
+    await fetch(`/users/${params.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    });
+  }
+);
+
+export const createUserAsync = createAsyncThunk(
+  'auth/createUser',
+  async (params: { login: string; password: string; email?: string; phoneNumber?: string }) => {
+    await fetch(`/users`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    });
+  }
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

@@ -21,9 +21,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { SwipeableTemporaryDrawer } from './drawer';
 import { useAppDispatch } from '../../app/hooks';
 import { searchpick } from '../search-slice';
-import { useCart } from '../../cart/hooks/use-cart';
 import { useAuth } from '../../auth/hooks/use-auth';
 import { useUser } from '../../auth/hooks/use-user';
+import { useCart } from '../../cart/hooks/use-cart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
