@@ -3,7 +3,6 @@ import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/materia
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-
 import { getUserAsync, selectUser } from '../auth-slice';
 
 export const Signin = () => {
@@ -13,6 +12,7 @@ export const Signin = () => {
     login: '',
     password: '',
   });
+  const navigate = useNavigate();
 
   return (
     <Grid container direction="column">
@@ -66,13 +66,13 @@ export const Signin = () => {
             variant="contained"
             fullWidth
             onClick={async () => {
-              console.log('login');
               await dispatch(
                 getUserAsync({
                   login: formData.login!,
                   password: formData.password!,
                 })
               );
+              navigate('/');
             }}
           >
             Sign in

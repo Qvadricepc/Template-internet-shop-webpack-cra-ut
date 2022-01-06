@@ -6,7 +6,9 @@ import { Button, Container, Grid, Paper, styled, Typography } from '@mui/materia
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { Comments } from '../../common/comments';
 import { Breadcrumb } from '../../common/breadcrumbs';
-import { useAddToCartMutation, useGetCartQuery } from '../../cart/cart-api-slice';
+import { useAddToCartMutation } from '../../cart/cart-api-slice';
+import { useUser } from '../../auth/hooks/use-user';
+import { useCart } from '../../cart/hooks/use-cart';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -21,11 +23,12 @@ const Hrivna = styled('span')({
 
 export const Product: React.FC = () => {
   const params = useParams();
-  const userId = '1';
+  const user = useUser();
+  const userId = user.data?.id || '0';
   const productId = params.id as string;
   const { data, isLoading, isError } = useGetProductQuery(productId);
   const [addToCart] = useAddToCartMutation();
-  const cart = useGetCartQuery(userId);
+  const { items: cardItems } = useCart();
 
   if (isLoading) {
     return <Loader />;
@@ -58,7 +61,7 @@ export const Product: React.FC = () => {
               onClick={() => {
                 addToCart({
                   userId,
-                  productsId: [...(cart.data || []), productId],
+                  productsId: [...(cardItems || []), productId],
                 });
               }}
               disabled={!data.available}

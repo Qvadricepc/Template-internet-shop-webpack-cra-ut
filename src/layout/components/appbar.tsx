@@ -2,6 +2,7 @@ import React from 'react';
 import {
   alpha,
   AppBar,
+  Avatar,
   Badge,
   Box,
   Grid,
@@ -20,7 +21,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { SwipeableTemporaryDrawer } from './drawer';
 import { useAppDispatch } from '../../app/hooks';
 import { searchpick } from '../search-slice';
-import { useGetCartQuery } from '../../cart/cart-api-slice';
+import { useCart } from '../../cart/hooks/use-cart';
+import { useAuth } from '../../auth/hooks/use-auth';
+import { useUser } from '../../auth/hooks/use-user';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,7 +69,9 @@ export const Appbar = () => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
-  const cartItems = useGetCartQuery('1');
+  const { items: cartItems, invalidateCache: invalidateCart } = useCart();
+  const { logout } = useAuth();
+  const user = useUser();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -96,6 +101,7 @@ export const Appbar = () => {
       onClose={handleMenuClose}
     >
       <MenuItem
+        disabled={user.data ? true : false}
         onClick={() => {
           handleMenuClose();
           navigate('/signin');
@@ -104,6 +110,7 @@ export const Appbar = () => {
         Sign in
       </MenuItem>
       <MenuItem
+        disabled={user.data ? true : false}
         onClick={() => {
           handleMenuClose();
           navigate('/signup');
@@ -112,6 +119,7 @@ export const Appbar = () => {
         Sign up
       </MenuItem>
       <MenuItem
+        disabled={user.data ? false : true}
         onClick={() => {
           handleMenuClose();
           navigate('/profile');
@@ -120,8 +128,11 @@ export const Appbar = () => {
         My profile
       </MenuItem>
       <MenuItem
+        disabled={user.data ? false : true}
         onClick={() => {
           handleMenuClose();
+          invalidateCart();
+          logout();
           navigate('/');
         }}
       >
@@ -173,10 +184,10 @@ export const Appbar = () => {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Link to="/cart">
               <IconButton size="large" sx={{ color: '#e0e0e0' }}>
-                <Badge badgeContent={cartItems.data?.length} color="secondary">
+                <Badge badgeContent={cartItems?.length} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
@@ -190,7 +201,11 @@ export const Appbar = () => {
               onClick={handleProfileMenuOpen}
               sx={{ color: '#e0e0e0' }}
             >
-              <AccountCircle />
+              {user.data ? (
+                <Avatar src="https://pickaface.net/gallery/avatar/20120409_230759_3646_Fake.png" />
+              ) : (
+                <AccountCircle />
+              )}
             </IconButton>
           </Box>
         </Toolbar>
