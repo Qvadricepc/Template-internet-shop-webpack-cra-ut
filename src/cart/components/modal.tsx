@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import { useRemoveCartMutation } from '../cart-api-slice';
+import { useUser } from '../../auth/hooks/use-user';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,6 +28,7 @@ export const BasicModal: React.FC<TProps> = ({ disabled }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
+  const user = useUser();
   const [removeCart] = useRemoveCartMutation();
 
   return (
@@ -56,7 +58,7 @@ export const BasicModal: React.FC<TProps> = ({ disabled }) => {
               variant="outlined"
               onClick={() => {
                 removeCart({
-                  userId: '1',
+                  userId: user.data?.id || '0',
                 });
                 navigate('/');
               }}

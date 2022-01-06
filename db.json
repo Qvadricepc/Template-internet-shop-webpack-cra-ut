@@ -8,10 +8,7 @@
   ],
   "cart": [
     {
-      "productsId": [
-        "3",
-        "10"
-      ],
+      "productsIds": [],
       "id": "1"
     }
   ],
