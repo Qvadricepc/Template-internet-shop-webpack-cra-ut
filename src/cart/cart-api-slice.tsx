@@ -11,7 +11,9 @@ export const cartApiSlice = createApi({
       async queryFn(_arg, _queriApi, _extraOptions, fetchWithBQ) {
         const cart = await fetchWithBQ(`/cart/${_arg}`);
 
-        if (cart.error && cart.error.status === 404) {
+        let isNotFound = cart.error && cart.error.status === 404;
+
+        if (cart.error && isNotFound) {
           throw cart.error;
         }
 

@@ -5,8 +5,17 @@ import drawerReducer from '../layout/drawer-slice';
 import searchReducer from '../layout/search-slice';
 import { cartApiSlice } from '../cart/cart-api-slice';
 import authReducer from '../auth/auth-slice';
+import * as localForage from 'localforage';
+import { persistStore } from 'redux-persist';
 
 let enhancers;
+
+// keep in localStorage, by default it uses indexedDB
+// https://localforage.github.io/localForage/#localforage
+localForage.config({
+  driver: localForage.LOCALSTORAGE,
+  name: 'internship intellectsoft',
+});
 
 // @ts-ignore
 if (process.env.NODE_ENV === 'development') {
@@ -33,6 +42,8 @@ export const store = configureStore({
       .concat(productApiSlice.middleware)
       .concat(cartApiSlice.middleware),
 });
+
+export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

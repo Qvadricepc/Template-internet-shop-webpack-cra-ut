@@ -1,24 +1,41 @@
 import React from 'react';
-import {
-  useGetCartProductsQuery,
-  useGetCartQuery,
-  useRemoveFromCartMutation,
-} from '../cart-api-slice';
+import { useGetCartProductsQuery, useRemoveFromCartMutation } from '../cart-api-slice';
 import { Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { TProduct } from '../../products/types';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../common/loader';
 import { Error } from '../../common/error';
 import { BasicModal } from './modal';
+import { useUser } from '../../auth/hooks/use-user';
+import { useCart } from '../hooks/use-cart';
 
 export const Cart = () => {
   const navigate = useNavigate();
-  const userId = '1';
-  const cart = useGetCartQuery('1');
-  const products = useGetCartProductsQuery({
-    productsId: cart.data,
-  });
+  const user = useUser();
+  const { items } = useCart();
+  const userId = user.data?.id || '0';
+  const products = useGetCartProductsQuery(
+    {
+      userId,
+      productsId: items,
+    },
+    {
+      skip: !items,
+    }
+  );
   const [deleteItem, { isLoading, isError }] = useRemoveFromCartMutation();
+
+  const totalSum =
+    products.data?.length !== 0
+      ? products.data &&
+        products
+          .data!.map((product: TProduct) => {
+            return product.price;
+          })
+          .reduce((prev: number, next: number) => {
+            return prev + next;
+          })
+      : 0;
 
   if (isLoading) {
     return <Loader />;
@@ -27,7 +44,7 @@ export const Cart = () => {
   if (isError) {
     return <Error />;
   }
-
+  console.log(products.data);
   return (
     <Container maxWidth="xl">
       <Paper elevation={10} sx={{ padding: '20px', margin: '30px auto' }}>
@@ -65,7 +82,7 @@ export const Cart = () => {
                     onClick={() => {
                       deleteItem({
                         userId,
-                        productsId: cart.data!.filter((id) => {
+                        productsId: items!.filter((id) => {
                           return String(id) !== String(product.id);
                         }),
                       });
@@ -102,17 +119,7 @@ export const Cart = () => {
           >
             <Grid>
               <Typography>
-                Total:{' '}
-                {products.data?.length !== 0
-                  ? products.data &&
-                    products
-                      .data!.map((product: TProduct) => {
-                        return product.price;
-                      })
-                      .reduce((prev: number, next: number) => {
-                        return prev + next;
-                      })
-                  : 0}{' '}
+                Total: {totalSum}
                 &#8372;
               </Typography>
             </Grid>

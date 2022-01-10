@@ -1,6 +1,8 @@
 import { TState } from './auth-types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
+import * as localForage from 'localforage';
+import { persistReducer } from 'redux-persist';
 
 export const initialState: TState = {
   user: {
@@ -86,9 +88,15 @@ export const authSlice = createSlice({
   },
 });
 
+const persistConfig = {
+  key: 'auth',
+  storage: localForage,
+  // whitelist: ['todos'],
+};
+
 export const { logout } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => selectAuth(state).user;
 
-export default authSlice.reducer;
+export default persistReducer(persistConfig, authSlice.reducer);

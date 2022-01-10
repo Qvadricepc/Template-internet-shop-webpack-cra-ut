@@ -27,14 +27,14 @@ export const Product: React.FC = () => {
   const userId = user.data?.id || '0';
   const productId = params.id as string;
   const { data, isLoading, isError } = useGetProductQuery(productId);
-  const [addToCart] = useAddToCartMutation();
+  const [addToCart, { isLoading: addLoading, isError: addError }] = useAddToCartMutation();
   const { items: cardItems } = useCart();
 
-  if (isLoading) {
+  if (isLoading || addLoading) {
     return <Loader />;
   }
 
-  if (isError) {
+  if (isError || addError) {
     return <div>Error</div>;
   }
 
