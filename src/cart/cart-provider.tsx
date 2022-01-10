@@ -8,8 +8,9 @@ import { TCartContext } from './cart-types';
 
 export const CartProvider: React.FC = ({ children }) => {
   const user = useUser();
-  const useQueryStateResult = cartApiSlice.endpoints.getCart.useQueryState(user.data?.id!, {});
-  const { data } = useGetCartQuery(user.data?.id as string, { skip: !user.data });
+  const userId = (user.data?.id || '0') as string;
+  const useQueryStateResult = cartApiSlice.endpoints.getCart.useQueryState(userId!, {});
+  const { data } = useGetCartQuery(userId);
   const dispatch = useAppDispatch();
   const invalidateCache = () => {
     dispatch(cartApiSlice.util.resetApiState);
