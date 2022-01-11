@@ -1,5 +1,5 @@
-import { selectUser, logout, getUserAsync } from './auth-slice';
-import React, { useEffect } from 'react';
+import { selectUser, logout } from './auth-slice';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { AuthContext } from './auth-context';
 

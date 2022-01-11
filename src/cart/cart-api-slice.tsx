@@ -81,7 +81,7 @@ export const cartApiSlice = createApi({
         url: `/cart/${userId}`,
         method: 'PUT',
         body: {
-          productsIds: [],
+          productsId: [],
         },
       }),
       invalidatesTags: (result, error, { userId }) => [

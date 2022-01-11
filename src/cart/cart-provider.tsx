@@ -10,11 +10,12 @@ export const CartProvider: React.FC = ({ children }) => {
   const user = useUser();
   const userId = (user.data?.id || '0') as string;
   const useQueryStateResult = cartApiSlice.endpoints.getCart.useQueryState(userId!, {});
-  const { data } = useGetCartQuery(userId);
+  const { data } = useGetCartQuery(userId, { refetchOnMountOrArgChange: true });
   const dispatch = useAppDispatch();
   const invalidateCache = () => {
     dispatch(cartApiSlice.util.resetApiState);
   };
+  console.log(userId);
 
   return (
     <CartContext.Provider

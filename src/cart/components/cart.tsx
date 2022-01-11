@@ -73,7 +73,7 @@ export const Cart = () => {
                 </Grid>
                 <Grid width={'25%'}>
                   <Typography>
-                    {(product.price * (100 - product.discount)) / 100} &#8372;
+                    {Math.round((product.price * (100 - product.discount)) / 100)} &#8372;
                   </Typography>
                 </Grid>
                 <Grid width={'25%'}>
@@ -119,10 +119,7 @@ export const Cart = () => {
             }}
           >
             <Grid>
-              <Typography>
-                Total: {totalSum}
-                &#8372;
-              </Typography>
+              <Typography>Total: {Math.round(totalSum)} &#8372;</Typography>
             </Grid>
             <Grid>
               <BasicModal disabled={!products.data || products.data?.length === 0} />

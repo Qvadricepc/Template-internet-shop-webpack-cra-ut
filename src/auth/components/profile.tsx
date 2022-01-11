@@ -81,6 +81,7 @@ export const Profile = () => {
               label="Birthday"
               disabled={edit}
               type="date"
+              defaultValue="1990-10-10"
               value={form.birthday}
               onChange={(e) => {
                 setForm({ ...form, birthday: e.currentTarget.value });
@@ -93,7 +94,7 @@ export const Profile = () => {
               <Select
                 disabled={edit}
                 label="Language"
-                value={form.language}
+                value={form?.language || '1'}
                 onChange={(e: SelectChangeEvent) => {
                   setForm({ ...form, language: e.target.value });
                 }}

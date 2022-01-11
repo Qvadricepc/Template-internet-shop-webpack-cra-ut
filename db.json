@@ -1,9 +1,9 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "login": "admin",
-      "password": 1111,
+      "password": "1111",
       "name": "Roman",
       "surname": "Sirmanov",
       "birthday": "1987-10-26",
@@ -12,30 +12,46 @@
       "language": 2
     },
     {
-      "login": "admin",
-      "password": "1111",
-      "id": 2
+      "login": "roma",
+      "password": "1",
+      "email": "roma@mail.ru",
+      "phoneNumber": "09267574747",
+      "id": "1hSeMSe",
+      "birthday": "2022-01-27",
+      "name": "roma",
+      "surname": "foma",
+      "language": 2
     },
     {
-      "login": "admin",
-      "password": "1111",
-      "id": 3
+      "login": "roma2",
+      "password": "2",
+      "email": "adasdasd",
+      "phoneNumber": "adasdasd",
+      "id": "3oX-SMB"
     }
   ],
   "cart": [
     {
-      "productsId": [
-        "5",
-        "10",
-        "5"
-      ],
+      "productsId": [],
       "id": "0"
     },
     {
       "productsId": [
-        "5"
+        "16",
+        "3"
       ],
       "id": "1"
+    },
+    {
+      "productsId": [],
+      "id": "1hSeMSe"
+    },
+    {
+      "productsId": [
+        "5",
+        "16"
+      ],
+      "id": "3oX-SMB"
     }
   ],
   "products": [
