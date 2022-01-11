@@ -18,6 +18,7 @@ import { useUser } from '../hooks/use-user';
 import { TUser } from '../auth-types';
 import { getUserAsync, updateUserAsync } from '../auth-slice';
 import { useAppDispatch } from '../../app/hooks';
+import withWidth from '@mui/material/Hidden/withWidth';
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -121,10 +122,11 @@ export const Profile = () => {
           <Grid justifyContent="space-around" display="flex" marginTop="5px">
             <Grid>
               <TextField
-                type="text"
+                type="email"
                 disabled={edit}
                 label="Email"
                 value={form.email}
+                sx={{ width: { md: '350px' }, marginLeft: { md: '70px' } }}
                 placeholder="Email"
                 onChange={(e) => {
                   setForm({ ...form, email: e.currentTarget.value });
@@ -137,6 +139,7 @@ export const Profile = () => {
                 disabled={edit}
                 label="Phone number"
                 placeholder="Phone number"
+                sx={{ marginRight: { md: '70px' } }}
                 value={form.phoneNumber}
                 onChange={(e) => {
                   setForm({ ...form, phoneNumber: e.currentTarget.value });

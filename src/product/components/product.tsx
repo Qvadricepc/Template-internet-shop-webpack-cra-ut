@@ -71,6 +71,7 @@ export const Product: React.FC = () => {
           </Grid>
           <Typography
             variant="h5"
+            color="primary"
             sx={{ textAlign: 'center', marginTop: { md: '5vh', xs: '2vh' } }}
           >
             {data.available ? 'Available' : 'Not available'}

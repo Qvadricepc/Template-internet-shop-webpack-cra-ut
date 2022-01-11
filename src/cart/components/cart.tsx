@@ -30,7 +30,7 @@ export const Cart = () => {
       ? products.data &&
         products
           .data!.map((product: TProduct) => {
-            return product.price;
+            return (product.price * (100 - product.discount)) / 100;
           })
           .reduce((prev: number, next: number) => {
             return prev + next;
@@ -44,7 +44,6 @@ export const Cart = () => {
   if (isError) {
     return <Error />;
   }
-  console.log(products.data);
   return (
     <Container maxWidth="xl">
       <Paper elevation={10} sx={{ padding: '20px', margin: '30px auto' }}>
@@ -73,7 +72,9 @@ export const Cart = () => {
                   <Typography>{product.name}</Typography>
                 </Grid>
                 <Grid width={'25%'}>
-                  <Typography>{product.price} &#8372;</Typography>
+                  <Typography>
+                    {(product.price * (100 - product.discount)) / 100} &#8372;
+                  </Typography>
                 </Grid>
                 <Grid width={'25%'}>
                   <Button
