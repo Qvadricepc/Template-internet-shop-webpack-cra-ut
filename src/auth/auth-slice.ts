@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import * as localForage from 'localforage';
 import { persistReducer } from 'redux-persist';
+import { fetchUpgrade } from '../services/api';
 
 export const initialState: TState = {
   user: {
@@ -14,12 +15,60 @@ export const initialState: TState = {
 export const getUserAsync = createAsyncThunk(
   'auth/fetchUser',
   async ({ login, password }: { login: string; password: string }) => {
-    const response = await fetch(`/users?login=${login}&password=${password}`);
-    const asJson = await response.json();
+    const asJson = await fetchUpgrade(`/users?login=${login}&password=${password}`);
     const user = asJson[0];
 
     if (!user) {
       throw new Error('No user found');
+    }
+
+    // move items from anonymous user's cart to current user's cart
+    try {
+      const anonymousCartAsJson = await fetchUpgrade(`/cart/0`);
+      let currentUserCartAsJson;
+      try {
+        currentUserCartAsJson = await fetchUpgrade(`/cart/${user.id}`);
+      } catch (e) {
+        console.log(e.message);
+        await fetchUpgrade(`/cart`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: user.id,
+            productsId: [],
+          }),
+        });
+        currentUserCartAsJson = {
+          productsId: [],
+        };
+      }
+      const set = new Set();
+      anonymousCartAsJson.productsId.forEach((id: string) => set.add(id));
+      currentUserCartAsJson.productsId.forEach((id: string) => set.add(id));
+      // @ts-ignore
+      const productsId = [...set];
+      await fetchUpgrade(`/cart/0`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productsId: [],
+        }),
+      });
+      await fetchUpgrade(`/cart/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productsId,
+        }),
+      });
+    } catch (e) {
+      console.log(e.message);
     }
 
     return user;
@@ -39,7 +88,7 @@ export const updateUserAsync = createAsyncThunk(
     email?: string;
     phoneNumber?: string;
   }) => {
-    await fetch(`/users/${params.id}`, {
+    await fetchUpgrade(`/users/${params.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +101,7 @@ export const updateUserAsync = createAsyncThunk(
 export const createUserAsync = createAsyncThunk(
   'auth/createUser',
   async (params: { login: string; password: string; email?: string; phoneNumber?: string }) => {
-    await fetch(`/users`, {
+    await fetchUpgrade(`/users`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -80,7 +129,7 @@ export const authSlice = createSlice({
         state.user.isError = false;
         state.user.data = action.payload;
       })
-      .addCase(getUserAsync.rejected, (state, action) => {
+      .addCase(getUserAsync.rejected, (state) => {
         state.user.isLoading = false;
         state.user.isError = true;
         state.user.data = undefined;

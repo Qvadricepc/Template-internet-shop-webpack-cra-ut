@@ -51,7 +51,7 @@ export const ProductCard: React.FC<TProps> = ({ product }) => {
             <Typography color="#ffd54f">
               {product.bestSeller ? 'Bestseller' : <Empty>Bestseller</Empty>}
             </Typography>
-            <Typography color="#bdbdbd">
+            <Typography color="primary">
               {product.available ? 'Available' : 'Not available'}
             </Typography>
             <Typography align="center" color="#ff8a65">

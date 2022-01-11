@@ -3,7 +3,7 @@ import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/materia
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import { createUserAsync } from '../auth-slice';
+import { createUserAsync, getUserAsync } from '../auth-slice';
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -92,6 +92,12 @@ export const Signup = () => {
             fullWidth
             onClick={async () => {
               await dispatch(createUserAsync(form));
+              await dispatch(
+                getUserAsync({
+                  login: form.login!,
+                  password: form.password,
+                })
+              );
               navigate('/');
             }}
           >
