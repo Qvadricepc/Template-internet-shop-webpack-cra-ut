@@ -19,6 +19,7 @@ export const getUserAsync = createAsyncThunk(
     const user = asJson[0];
 
     if (!user) {
+      console.log('No user found');
       throw new Error('No user found');
     }
 
@@ -101,6 +102,11 @@ export const updateUserAsync = createAsyncThunk(
 export const createUserAsync = createAsyncThunk(
   'auth/createUser',
   async (params: { login: string; password: string; email?: string; phoneNumber?: string }) => {
+    const asJson = await fetchUpgrade(`/users?login=${params.login}&password=${params.password}`);
+    const user = asJson[0];
+    if (user) {
+      throw new Error('Such user exists');
+    }
     await fetchUpgrade(`/users`, {
       method: 'POST',
       headers: {
@@ -133,6 +139,17 @@ export const authSlice = createSlice({
         state.user.isLoading = false;
         state.user.isError = true;
         state.user.data = undefined;
+      })
+      .addCase(createUserAsync.pending, (state) => {
+        state.user.isLoading = true;
+      })
+      .addCase(createUserAsync.fulfilled, (state, action) => {
+        state.user.isLoading = false;
+        state.user.isError = false;
+      })
+      .addCase(createUserAsync.rejected, (state) => {
+        state.user.isLoading = false;
+        state.user.isError = true;
       });
   },
 });
