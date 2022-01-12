@@ -15,7 +15,6 @@ export const CartProvider: React.FC = ({ children }) => {
   const invalidateCache = () => {
     dispatch(cartApiSlice.util.resetApiState);
   };
-  console.log(userId);
 
   return (
     <CartContext.Provider

@@ -3,11 +3,13 @@ import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/materia
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import { createUserAsync, getUserAsync } from '../auth-slice';
+import { createUserAsync } from '../auth-slice';
+import { useUser } from '../hooks/use-user';
 
 export const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useUser();
   const [form, setForm] = useState<{
     login: string;
     password: string;
@@ -24,7 +26,7 @@ export const Signup = () => {
         elevation={10}
         sx={{
           padding: '20px',
-          height: '450px',
+          height: '460px',
           width: '280px',
           margin: '30px auto',
         }}
@@ -92,17 +94,15 @@ export const Signup = () => {
             fullWidth
             onClick={async () => {
               await dispatch(createUserAsync(form));
-              await dispatch(
-                getUserAsync({
-                  login: form.login!,
-                  password: form.password,
-                })
-              );
-              navigate('/');
             }}
           >
             Sign up
           </Button>
+          {user.isError ? (
+            <Typography color="red" align="center" sx={{ paddingTop: '7px' }}>
+              Such user already exists
+            </Typography>
+          ) : null}
         </Grid>
       </Paper>
     </Grid>
