@@ -10,46 +10,6 @@
       "email": "roman.sirmanov@intellectsoft@gmail.com",
       "phoneNumber": "096-629-19-78",
       "language": 2
-    },
-    {
-      "login": "roma",
-      "password": "1",
-      "id": "DisM1YY"
-    },
-    {
-      "login": "boba",
-      "password": "1",
-      "id": "CZwSOIX"
-    },
-    {
-      "login": "мфыф",
-      "password": "111",
-      "id": "DXN_E55"
-    },
-    {
-      "login": "bobaa",
-      "password": "12",
-      "id": "7nVE6lp"
-    },
-    {
-      "login": "vasaa",
-      "password": "11",
-      "id": "6aFEeWm"
-    },
-    {
-      "login": "vasasasa",
-      "password": "12",
-      "id": "4b9h0rQ"
-    },
-    {
-      "login": "fdfdf",
-      "password": "dfdfdf",
-      "id": "xdfnkyA"
-    },
-    {
-      "login": "ишиф",
-      "password": "ваываыв",
-      "id": "f2IFA7q"
     }
   ],
   "cart": [
@@ -58,7 +18,9 @@
       "id": "0"
     },
     {
-      "productsId": [],
+      "productsId": [
+        "5"
+      ],
       "id": "1"
     }
   ],

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { createUserAsync } from '../auth-slice';
 import { useUser } from '../hooks/use-user';
 
 export const Signup = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useUser();
   const [form, setForm] = useState<{

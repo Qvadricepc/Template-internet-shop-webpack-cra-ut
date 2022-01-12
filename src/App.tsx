@@ -8,6 +8,8 @@ import { Cart } from './cart/components/cart';
 import { Profile } from './auth/components/profile';
 import { Signin } from './auth/components/signin';
 import { Signup } from './auth/components/signup';
+import { AuthOnly } from './auth/components/auth-only';
+import { NotAuthOnly } from './auth/components/noauth-only';
 
 function App() {
   return (
@@ -16,9 +18,9 @@ function App() {
         <Route path="/" element={<Products />} />
         <Route path="/products/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<AuthOnly component={Profile} />} />
+        <Route path="/signin" element={<NotAuthOnly component={Signin} />} />
+        <Route path="/signup" element={<NotAuthOnly component={Signup} />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </Layout>

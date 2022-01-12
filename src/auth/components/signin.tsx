@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserAsync, selectUser } from '../auth-slice';
 
@@ -12,7 +12,6 @@ export const Signin = () => {
     login: '',
     password: '',
   });
-  const navigate = useNavigate();
 
   return (
     <Grid container direction="column">
@@ -72,7 +71,6 @@ export const Signin = () => {
                   password: formData.password!,
                 })
               );
-              navigate('/');
             }}
           >
             Sign in
