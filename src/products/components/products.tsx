@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetProductsQuery } from '../products-api-slice';
+import { useGetAllProductsQuery, useGetProductsQuery } from '../products-api-slice';
 import { TProduct } from '../types';
 import { Grid } from '@mui/material';
 import { ProductCard } from './product-card';
@@ -14,17 +14,34 @@ import Pagination from '@mui/material/Pagination';
 export const Products: React.FC = () => {
   const pickedCategory = useAppSelector(selectCategory);
   const [page, setPage] = useState(1);
-  const search = useAppSelector(selectSearch);
-  const { data, isLoading, isError } = useGetProductsQuery(page);
+  const search = useAppSelector(selectSearch) || undefined;
+  const category =
+    pickedCategory.toLowerCase() !== 'all products' ? pickedCategory.toLowerCase() : undefined;
+
+  const { data, isLoading, isError } = useGetProductsQuery({
+    page: page,
+    category: category,
+    name: search,
+  });
+  const {
+    data: allData,
+    isLoading: allIsLoading,
+    isError: allIsError,
+  } = useGetAllProductsQuery({
+    category: category,
+    name: search,
+  });
 
   const handleChange = (e: any, p: number) => {
     setPage(p);
   };
 
-  if (isLoading) {
+  const totalPages = Math.ceil(allData?.length / 12);
+
+  if (isLoading && allIsLoading) {
     return <Loader />;
   }
-  if (isError) {
+  if (isError && allIsError) {
     return <div>Error</div>;
   }
   if (!data) {
@@ -33,19 +50,17 @@ export const Products: React.FC = () => {
 
   return (
     <Grid container spacing={3} bgcolor="#e8eaf6" display="flex" justifyContent="center">
-      {data
-        .filter((cat: TProduct) =>
-          pickedCategory === 'All products' ? true : cat.category === pickedCategory.toLowerCase()
-        )
-        .filter((searchName: TProduct) => searchName.name.toLowerCase().includes(search))
-        .map((product: TProduct) => {
-          return <ProductCard product={product} key={product.id} />;
-        })}
-      <Grid item display="flex" justifyContent="center">
-        <Stack spacing={2}>
-          <Pagination count={8} color="primary" onChange={handleChange} />
-        </Stack>
-      </Grid>
+      {data.map((product: TProduct) => {
+        return <ProductCard product={product} key={product.id} />;
+      })}
+
+      {totalPages > 1 && (
+        <Grid item display="flex" justifyContent="center" lg={12} md={12} xs={12}>
+          <Stack spacing={2}>
+            <Pagination count={totalPages} color="primary" onChange={handleChange} />
+          </Stack>
+        </Grid>
+      )}
     </Grid>
   );
 };
