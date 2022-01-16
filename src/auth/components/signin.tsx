@@ -4,7 +4,6 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserAsync, selectUser } from '../auth-slice';
-import { PositionedSnackbar } from '../../common/toaster/snackbar';
 
 export const Signin = () => {
   const dispatch = useAppDispatch();
@@ -85,7 +84,6 @@ export const Signin = () => {
           >
             Sign up
           </Link>
-          <PositionedSnackbar />
         </Typography>
       </Paper>
     </Grid>

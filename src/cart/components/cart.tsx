@@ -8,11 +8,13 @@ import { Error } from '../../common/error';
 import { BasicModal } from './modal';
 import { useUser } from '../../auth/hooks/use-user';
 import { useCart } from '../hooks/use-cart';
+import { useToaster } from '../../common/toaster/hook/use-toast';
 
 export const Cart = () => {
   const navigate = useNavigate();
   const user = useUser();
   const { items } = useCart();
+  const { success, error } = useToaster();
   const userId = user.data?.id || '0';
   const products = useGetCartProductsQuery(
     {
@@ -86,7 +88,9 @@ export const Cart = () => {
                         productsId: items!.filter((id) => {
                           return String(id) !== String(product.id);
                         }),
-                      });
+                      })
+                        .then(() => success())
+                        .catch(() => error());
                     }}
                   >
                     DELETE
