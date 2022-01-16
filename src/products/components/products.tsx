@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetAllProductsQuery, useGetProductsQuery } from '../products-api-slice';
 import { TProduct } from '../types';
 import { Grid } from '@mui/material';
@@ -23,11 +23,7 @@ export const Products: React.FC = () => {
     category: category,
     name: search,
   });
-  const {
-    data: allData,
-    isLoading: allIsLoading,
-    isError: allIsError,
-  } = useGetAllProductsQuery({
+  const { data: allData } = useGetAllProductsQuery({
     category: category,
     name: search,
   });
@@ -36,12 +32,16 @@ export const Products: React.FC = () => {
     setPage(p);
   };
 
+  useEffect(() => {
+    setPage(1);
+  }, [category, search]);
+
   const totalPages = Math.ceil(allData?.length / 12);
 
-  if (isLoading && allIsLoading) {
+  if (isLoading) {
     return <Loader />;
   }
-  if (isError && allIsError) {
+  if (isError) {
     return <div>Error</div>;
   }
   if (!data) {
@@ -57,7 +57,12 @@ export const Products: React.FC = () => {
       {totalPages > 1 && (
         <Grid item display="flex" justifyContent="center" lg={12} md={12} xs={12}>
           <Stack spacing={2}>
-            <Pagination count={totalPages} color="primary" onChange={handleChange} />
+            <Pagination
+              count={totalPages}
+              color="primary"
+              onChange={handleChange}
+              defaultPage={1}
+            />
           </Stack>
         </Grid>
       )}
