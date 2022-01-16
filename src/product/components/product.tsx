@@ -9,6 +9,7 @@ import { Breadcrumb } from '../../common/breadcrumbs';
 import { useAddToCartMutation } from '../../cart/cart-api-slice';
 import { useUser } from '../../auth/hooks/use-user';
 import { useCart } from '../../cart/hooks/use-cart';
+import { useToaster } from '../../common/toaster/hook/use-toast';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -27,10 +28,11 @@ export const Product: React.FC = () => {
   const userId = user.data?.id || '0';
   const productId = params.id as string;
   const { data, isLoading, isError } = useGetProductQuery(productId);
-  const [addToCart, { isLoading: addLoading, isError: addError }] = useAddToCartMutation();
+  const [addToCart, { isError: addError }] = useAddToCartMutation();
   const { items: cardItems } = useCart();
+  const { success, error } = useToaster();
 
-  if (isLoading || addLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -62,7 +64,9 @@ export const Product: React.FC = () => {
                 addToCart({
                   userId,
                   productsId: [...(cardItems || []), productId],
-                });
+                })
+                  .then(() => success())
+                  .catch(() => error());
               }}
               disabled={!data.available}
             >
