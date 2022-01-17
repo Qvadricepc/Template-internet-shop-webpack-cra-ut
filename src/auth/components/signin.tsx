@@ -4,6 +4,7 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserAsync, selectUser } from '../auth-slice';
+import { useToaster } from '../../common/toaster/hook/use-toast';
 
 export const Signin = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ export const Signin = () => {
     login: '',
     password: '',
   });
+  const { success, error } = useToaster();
 
   return (
     <Grid container direction="column">
@@ -61,16 +63,20 @@ export const Signin = () => {
         </Grid>
         <Grid item sx={{ paddingTop: '20px' }}>
           <Button
-            disabled={!formData.login || !formData.password || user.isLoading}
+            disabled={!formData.login || !formData.password}
             variant="contained"
             fullWidth
             onClick={async () => {
-              await dispatch(
+              const getUser = await dispatch(
                 getUserAsync({
                   login: formData.login!,
                   password: formData.password!,
                 })
               );
+              // @ts-ignore
+              if (getUser.error) {
+                return error('No such user founded');
+              } else return success();
             }}
           >
             Sign in

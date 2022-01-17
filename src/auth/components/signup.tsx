@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import { useAppDispatch } from '../../app/hooks';
-import { createUserAsync } from '../auth-slice';
+import { createUserAsync, getUserAsync } from '../auth-slice';
 import { useUser } from '../hooks/use-user';
+import { useToaster } from '../../common/toaster/hook/use-toast';
 
 export const Signup = () => {
   const dispatch = useAppDispatch();
   const user = useUser();
+  const { success, error } = useToaster();
   const [form, setForm] = useState<{
     login: string;
     password: string;
@@ -91,16 +93,23 @@ export const Signup = () => {
             disabled={!form.login && !form.password}
             fullWidth
             onClick={async () => {
-              await dispatch(createUserAsync(form));
+              const createUser = await dispatch(createUserAsync(form));
+              // @ts-ignore
+              if (createUser.error) {
+                return error('User already exists!!');
+              } else {
+                await dispatch(
+                  getUserAsync({
+                    login: form.login!,
+                    password: form.password!,
+                  })
+                );
+                success();
+              }
             }}
           >
             Sign up
           </Button>
-          {user.isError ? (
-            <Typography color="red" align="center" sx={{ paddingTop: '7px' }}>
-              Such user already exists
-            </Typography>
-          ) : null}
         </Grid>
       </Paper>
     </Grid>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Container,
@@ -18,7 +18,7 @@ import { useUser } from '../hooks/use-user';
 import { TUser } from '../auth-types';
 import { getUserAsync, updateUserAsync } from '../auth-slice';
 import { useAppDispatch } from '../../app/hooks';
-import withWidth from '@mui/material/Hidden/withWidth';
+import { useToaster } from '../../common/toaster/hook/use-toast';
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ export const Profile = () => {
   const user = useUser();
   const [form, setForm] = useState<TUser>(user.data! || {});
   const [edit, setEdit] = useState(true);
+  const { success, error } = useToaster();
 
   return (
     <Container maxWidth="xl">
@@ -47,11 +48,16 @@ export const Profile = () => {
           </Grid>
         </Grid>
         <Grid>
-          <Grid justifyContent="space-around" display="flex" marginTop="5px">
+          <Grid
+            justifyContent="space-around"
+            display={{ xs: 'block', sm: 'block', md: 'flex', lg: 'flex' }}
+            marginTop="5px"
+          >
             <Grid>
               <TextField
                 type="text"
                 disabled={edit}
+                sx={{ width: { xs: '100%' } }}
                 label="Name"
                 value={form.name}
                 placeholder="Name"
@@ -63,6 +69,7 @@ export const Profile = () => {
             <Grid>
               <TextField
                 type="text"
+                sx={{ marginTop: { xs: '10px' }, width: { xs: '100%' } }}
                 disabled={edit}
                 label="Surname"
                 value={form.surname}
@@ -74,12 +81,17 @@ export const Profile = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid justifyContent="space-around" display="flex" sx={{ marginTop: '20px' }}>
+        <Grid
+          justifyContent="space-around"
+          display={{ xs: 'block', sm: 'block', md: 'flex', lg: 'flex' }}
+          sx={{ marginTop: { xs: '10px', md: '20px' } }}
+        >
           <Grid>
             <TextField
               id="date"
               label="Birthday"
               disabled={edit}
+              sx={{ width: { xs: '100%' } }}
               type="date"
               defaultValue="1990-10-10"
               value={form.birthday}
@@ -89,7 +101,7 @@ export const Profile = () => {
             />
           </Grid>
           <Grid width="208px">
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{ marginTop: { xs: '10px' }, width: { xs: '100%' } }}>
               <InputLabel>Language</InputLabel>
               <Select
                 disabled={edit}
@@ -120,14 +132,18 @@ export const Profile = () => {
           </Grid>
         </Grid>
         <Grid>
-          <Grid justifyContent="space-around" display="flex" marginTop="5px">
+          <Grid
+            justifyContent="space-around"
+            display={{ xs: 'block', sm: 'block', md: 'flex', lg: 'flex' }}
+            marginTop="5px"
+          >
             <Grid>
               <TextField
                 type="email"
                 disabled={edit}
                 label="Email"
                 value={form.email}
-                sx={{ width: { md: '350px' }, marginLeft: { md: '70px' } }}
+                sx={{ width: { md: '350px', xs: '100%' }, marginLeft: { md: '70px' } }}
                 placeholder="Email"
                 onChange={(e) => {
                   setForm({ ...form, email: e.currentTarget.value });
@@ -140,7 +156,11 @@ export const Profile = () => {
                 disabled={edit}
                 label="Phone number"
                 placeholder="Phone number"
-                sx={{ marginRight: { md: '70px' } }}
+                sx={{
+                  marginRight: { md: '70px' },
+                  marginTop: { xs: '10px' },
+                  width: { xs: '100%' },
+                }}
                 value={form.phoneNumber}
                 onChange={(e) => {
                   setForm({ ...form, phoneNumber: e.currentTarget.value });
@@ -163,7 +183,11 @@ export const Profile = () => {
           </Grid>
         </Grid>
         <Grid>
-          <Grid justifyContent="space-around" display="flex" marginTop="5px">
+          <Grid
+            justifyContent="space-around"
+            display={{ xs: 'block', sm: 'block', md: 'flex', lg: 'flex' }}
+            marginTop="5px"
+          >
             <Grid>
               <TextField
                 type="text"
@@ -180,6 +204,7 @@ export const Profile = () => {
               <TextField
                 type="Password"
                 disabled={edit}
+                sx={{ marginTop: { xs: '10px' } }}
                 label="Password"
                 value={form.password}
                 placeholder="Password"
@@ -204,7 +229,11 @@ export const Profile = () => {
             onClick={async () => {
               await dispatch(updateUserAsync(form));
               setEdit(true);
-              await dispatch(getUserAsync(user.data!));
+              const updated = await dispatch(getUserAsync(user.data!));
+              // @ts-ignore
+              if (updated.error) {
+                return error();
+              } else return success();
             }}
           >
             Update

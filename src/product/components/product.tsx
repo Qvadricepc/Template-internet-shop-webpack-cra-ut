@@ -10,6 +10,7 @@ import { useAddToCartMutation } from '../../cart/cart-api-slice';
 import { useUser } from '../../auth/hooks/use-user';
 import { useCart } from '../../cart/hooks/use-cart';
 import { useToaster } from '../../common/toaster/hook/use-toast';
+import { includes } from 'lodash';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -49,7 +50,10 @@ export const Product: React.FC = () => {
         {data.name}
       </Typography>
       <Grid container spacing={2} display="flex">
-        <Grid item sx={{ marginTop: '3vh' }}>
+        <Grid
+          item
+          sx={{ marginTop: '3vh', marginLeft: { xs: '20px', sm: '20px', md: '0', lg: '0' } }}
+        >
           <Item>
             <img src={data.image_url} alt="Product" height={'400px'} width={'400px'} />
           </Item>
@@ -58,6 +62,7 @@ export const Product: React.FC = () => {
           <Grid item>
             <Button
               variant="contained"
+              disabled={includes(cardItems, productId) || !data.available}
               size="large"
               startIcon={<ShoppingBasketIcon />}
               onClick={() => {
@@ -68,7 +73,6 @@ export const Product: React.FC = () => {
                   .then(() => success())
                   .catch(() => error());
               }}
-              disabled={!data.available}
             >
               BUY
             </Button>

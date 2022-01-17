@@ -63,7 +63,7 @@ export const BasicModal: React.FC<TProps> = ({ disabled }) => {
                 navigate('/');
               }}
             >
-              Back to store
+              Send order and return to store
             </Button>
           </Grid>
         </Grid>
