@@ -10,6 +10,7 @@ import { selectSearch } from '../../layout/search-slice';
 
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
+import { Breadcrumb } from '../../common/breadcrumbs';
 
 export const Products: React.FC = () => {
   const pickedCategory = useAppSelector(selectCategory);
@@ -50,6 +51,9 @@ export const Products: React.FC = () => {
 
   return (
     <Grid container spacing={3} bgcolor="#e8eaf6" display="flex" justifyContent="center">
+      <Grid item display="flex" justifyContent="start" lg={12} md={12} xs={12}>
+        {category && <Breadcrumb {...data} />}
+      </Grid>
       {data.map((product: TProduct) => {
         return <ProductCard product={product} key={product.id} />;
       })}

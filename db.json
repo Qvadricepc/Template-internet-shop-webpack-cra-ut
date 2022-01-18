@@ -10,6 +10,15 @@
       "email": "roman.sirmanov@intellectsoft@gmail.com",
       "phoneNumber": "096-629-19-78",
       "language": 2
+    },
+    {
+      "login": "vana",
+      "password": "111",
+      "id": "c0SwvLZ",
+      "name": "Vasa",
+      "surname": "Ivanov",
+      "birthday": "1990-10-26",
+      "language": 2
     }
   ],
   "cart": [
@@ -20,6 +29,10 @@
     {
       "productsId": [],
       "id": "1"
+    },
+    {
+      "productsId": [],
+      "id": "c0SwvLZ"
     }
   ],
   "products": [

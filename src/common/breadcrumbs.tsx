@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
 import { TProduct } from '../products/types';
+import { useAppSelector } from '../app/hooks';
+import { selectCategory } from '../layout/drawer-slice';
 
 export const Breadcrumb: React.FC<TProduct> = (data) => {
+  const pickedCategory = useAppSelector(selectCategory);
   return (
     <div role="presentation">
       <Breadcrumbs aria-label="breadcrumb">
@@ -18,7 +21,7 @@ export const Breadcrumb: React.FC<TProduct> = (data) => {
         </Link>
         <Typography sx={{ display: 'flex', alignItems: 'center' }} color="text.primary">
           <GrainIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-          {data.name}
+          {data.name || pickedCategory}
         </Typography>
       </Breadcrumbs>
     </div>

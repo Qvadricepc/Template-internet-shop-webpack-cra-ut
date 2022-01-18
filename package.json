@@ -1,5 +1,6 @@
 {
   "name": "internship-roman-sirmanov",
+  "homepage": "https://internship-intellectsoft.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +13,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.2",
+    "express-history-api-fallback": "^2.2.1",
     "heroku": "^7.59.2",
     "json-server": "^0.17.0",
     "localforage": "^1.10.0",
@@ -21,14 +23,13 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^6.0.2",
-    "react-scripts": "5.0.0-next.58",
     "redux-persist": "^6.0.0",
     "typescript": "~4.1.5"
   },
   "proxy": "http://localhost:5000",
   "scripts": {
-    "start": "concurrently \"yarn start-react\" \"yarn server\"",
-    "start:react": "npx react-scripts start",
+    "start": "concurrently \"yarn server\" \"yarn start-react\"",
+    "start-react": "npx react-scripts start",
     "build": "npx react-scripts build",
     "serve": "node ./server",
     "test": "react-scripts test",
@@ -36,7 +37,8 @@
     "prepare": "husky install",
     "tslint": "tsc --noEmit",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts,tsx}\"",
-    "server": "json-server --watch db.json --port 5000"
+    "server": "json-server --watch db.json --port 5000 --routes routes.json",
+    "test:watch": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
@@ -80,8 +82,10 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.0",
+    "json-server": "^0.17.0",
     "lint-staged": "^12.0.2",
     "prettier": "^2.4.1",
+    "react-scripts": "5.0.0-next.58",
     "reactotron-react-js": "^3.3.7",
     "reactotron-redux": "^3.1.3"
   }
