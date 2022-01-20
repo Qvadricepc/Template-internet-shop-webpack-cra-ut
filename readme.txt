@@ -19,5 +19,5 @@ products : JG.repeat(100, {
         varanty: JG.random(6, 12, 24, 36),
     });
 
-    Heroku:
+    Deployed Heroku:
     https://internship-intellectsoft.herokuapp.com/
