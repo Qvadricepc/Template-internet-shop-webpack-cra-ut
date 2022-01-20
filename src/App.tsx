@@ -18,6 +18,7 @@ function App() {
       <ToasterProvider>
         <Routes>
           <Route path="/" element={<Products />} />
+          <Route path="/:category" element={<Products />} />
           <Route path="/products/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<AuthOnly component={Profile} />} />
