@@ -94,7 +94,7 @@ export const SwipeableTemporaryDrawer = () => {
             selected={item.text == category}
             onClick={() => {
               dispatch(menupick(item.text));
-              navigate(`/` + qs.stringify({ category: dispatch(menupick(item.text)) }));
+              navigate(`/` + qs.stringify({ category: dispatch(menupick(item.text)).payload }));
             }}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
