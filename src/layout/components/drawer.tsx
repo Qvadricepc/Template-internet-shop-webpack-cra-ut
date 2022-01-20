@@ -27,7 +27,7 @@ export const SwipeableTemporaryDrawer = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const pickedCategory = useAppSelector(selectCategory);
-  const [category, setCategory] = useState('All products');
+  const [category, setCategory] = useState('All products' || pickedCategory);
   const [state, setState] = React.useState({
     left: false,
   });
