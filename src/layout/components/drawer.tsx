@@ -17,19 +17,22 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { menupick, selectCategory } from '../drawer-slice';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
-import * as path from 'path';
+import { useEffect, useState } from 'react';
 
 type Anchor = 'left';
 
 export const SwipeableTemporaryDrawer = () => {
   const navigate = useNavigate();
-  const pickedCategory = useAppSelector(selectCategory);
   const dispatch = useAppDispatch();
+  const pickedCategory = useAppSelector(selectCategory);
+  const [category, setCategory] = useState('All products');
   const [state, setState] = React.useState({
     left: false,
   });
+
+  useEffect(() => setCategory(pickedCategory), [pickedCategory]);
 
   const menuItems = [
     {
@@ -88,6 +91,7 @@ export const SwipeableTemporaryDrawer = () => {
           <ListItem
             key={item.text}
             button
+            selected={item.text == category}
             onClick={() => {
               dispatch(menupick(item.text));
               navigate(`/` + qs.stringify({ category: dispatch(menupick(item.text)) }));
