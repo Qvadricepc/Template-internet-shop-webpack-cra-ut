@@ -5,19 +5,19 @@ import { Grid } from '@mui/material';
 import { ProductCard } from './product-card';
 import { Loader } from '../../common/loader';
 import { useAppSelector } from '../../app/hooks';
-import { selectCategory } from '../../layout/drawer-slice';
 import { selectSearch } from '../../layout/search-slice';
 
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import { Breadcrumb } from '../../common/breadcrumbs';
+import { useSearchParams } from 'react-router-dom';
 
 export const Products: React.FC = () => {
-  const pickedCategory = useAppSelector(selectCategory);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pickedCategory = searchParams.get('category') || '';
   const [page, setPage] = useState(1);
   const search = useAppSelector(selectSearch) || undefined;
-  const category =
-    pickedCategory.toLowerCase() !== 'all products' ? pickedCategory.toLowerCase() : undefined;
+  const category = pickedCategory.toLowerCase() !== '' ? pickedCategory.toLowerCase() : undefined;
 
   const { data, isLoading, isError } = useGetProductsQuery({
     page: page,

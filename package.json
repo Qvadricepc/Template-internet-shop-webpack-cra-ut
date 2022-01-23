@@ -1,6 +1,5 @@
 {
   "name": "internship-roman-sirmanov",
-  "homepage": "https://internship-intellectsoft.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardMedia, Grid, Typography, styled } from '@mui/material';
 import React from 'react';
 import { TProduct } from '../types';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 type TProps = {
   product: TProduct;
@@ -16,6 +16,7 @@ const Empty = styled('span')({
 });
 
 export const ProductCard: React.FC<TProps> = ({ product }) => {
+  const [searhParams, setSearchParams] = useSearchParams();
   const price = Math.round(product.price - product.price * (product.discount / 100));
 
   const discount = (
@@ -29,7 +30,10 @@ export const ProductCard: React.FC<TProps> = ({ product }) => {
     <Grid item xs={12} sm={6} md={4} lg={2}>
       <Card elevation={4}>
         <CardHeader align="center" />
-        <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'primary' }}>
+        <Link
+          to={`/products/${product.id}?category=${searhParams.get('category')}`}
+          style={{ textDecoration: 'none', color: 'primary' }}
+        >
           <CardMedia
             component="img"
             image={product.thumbnail_url}

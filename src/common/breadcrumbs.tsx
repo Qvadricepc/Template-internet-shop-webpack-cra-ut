@@ -1,15 +1,15 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
 import { TProduct } from '../products/types';
-import { useAppSelector } from '../app/hooks';
-import { selectCategory } from '../layout/drawer-slice';
+import AllOutIcon from '@mui/icons-material/AllOut';
 
 export const Breadcrumb: React.FC<TProduct> = (data) => {
-  const pickedCategory = useAppSelector(selectCategory);
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get('category'));
   return (
     <div role="presentation">
       <Breadcrumbs aria-label="breadcrumb">
@@ -17,12 +17,28 @@ export const Breadcrumb: React.FC<TProduct> = (data) => {
           to="/"
           style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', color: 'black' }}
         >
-          <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" /> Home
+          <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" /> All products
         </Link>
-        <Typography sx={{ display: 'flex', alignItems: 'center' }} color="text.primary">
-          <GrainIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-          {data.name || pickedCategory}
-        </Typography>
+        {searchParams.get('category') !== 'null' && (
+          <Link
+            to={`/?category=${searchParams.get('category')}`}
+            style={{
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              color: 'black',
+            }}
+          >
+            <AllOutIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+            {searchParams.get('category')}
+          </Link>
+        )}
+        {data.name && (
+          <Typography sx={{ display: 'flex', alignItems: 'center' }} color="text.primary">
+            <GrainIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+            {data.name}
+          </Typography>
+        )}
       </Breadcrumbs>
     </div>
   );
