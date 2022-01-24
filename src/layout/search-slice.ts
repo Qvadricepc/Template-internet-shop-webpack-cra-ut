@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TSearch } from './drawer-types';
+import { TSearch } from './searchr-types';
 import { RootState } from '../app/store';
 
 const initialState = { name: '' } as TSearch;

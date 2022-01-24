@@ -15,15 +15,14 @@ import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import { useAppDispatch } from '../../app/hooks';
-import { menupick } from '../drawer-slice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import qs from 'qs';
 
 type Anchor = 'left';
 
 export const SwipeableTemporaryDrawer = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [state, setState] = React.useState({
     left: false,
   });
@@ -85,9 +84,12 @@ export const SwipeableTemporaryDrawer = () => {
           <ListItem
             key={item.text}
             button
+            selected={item.text === searchParams.get('category')}
             onClick={() => {
-              dispatch(menupick(item.text));
-              navigate('/');
+              navigate(
+                `/?` +
+                  qs.stringify({ category: item.text === 'All products' ? undefined : item.text })
+              );
             }}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>

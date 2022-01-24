@@ -18,3 +18,6 @@ products : JG.repeat(100, {
         country: JG.country(),
         varanty: JG.random(6, 12, 24, 36),
     });
+
+    Deployed Heroku:
+    https://internship-intellectsoft.herokuapp.com/

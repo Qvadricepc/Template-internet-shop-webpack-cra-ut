@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useGetProductQuery } from '../product-api-slice';
 import { Loader } from '../../common/loader';
 import { Button, Container, Grid, Paper, styled, Typography } from '@mui/material';

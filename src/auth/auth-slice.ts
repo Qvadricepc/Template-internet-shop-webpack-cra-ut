@@ -15,7 +15,7 @@ export const initialState: TState = {
 export const getUserAsync = createAsyncThunk(
   'auth/fetchUser',
   async ({ login, password }: { login: string; password: string }) => {
-    const asJson = await fetchUpgrade(`/users?login=${login}&password=${password}`);
+    const asJson = await fetchUpgrade(`/api/users?login=${login}&password=${password}`);
     const user = asJson[0];
 
     if (!user) {
@@ -25,13 +25,13 @@ export const getUserAsync = createAsyncThunk(
 
     // move items from anonymous user's cart to current user's cart
     try {
-      const anonymousCartAsJson = await fetchUpgrade(`/cart/0`);
+      const anonymousCartAsJson = await fetchUpgrade(`/api/cart/0`);
       let currentUserCartAsJson;
       try {
-        currentUserCartAsJson = await fetchUpgrade(`/cart/${user.id}`);
+        currentUserCartAsJson = await fetchUpgrade(`/api/cart/${user.id}`);
       } catch (e) {
         console.log(e.message);
-        await fetchUpgrade(`/cart`, {
+        await fetchUpgrade(`/api/cart`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const getUserAsync = createAsyncThunk(
       currentUserCartAsJson.productsId.forEach((id: string) => set.add(id));
       // @ts-ignore
       const productsId = [...set];
-      await fetchUpgrade(`/cart/0`, {
+      await fetchUpgrade(`/api/cart/0`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const getUserAsync = createAsyncThunk(
           productsId: [],
         }),
       });
-      await fetchUpgrade(`/cart/${user.id}`, {
+      await fetchUpgrade(`/api/cart/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export const updateUserAsync = createAsyncThunk(
     email?: string;
     phoneNumber?: string;
   }) => {
-    await fetchUpgrade(`/users/${params.id}`, {
+    await fetchUpgrade(`/api/users/${params.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -102,12 +102,14 @@ export const updateUserAsync = createAsyncThunk(
 export const createUserAsync = createAsyncThunk(
   'auth/createUser',
   async (params: { login: string; password: string; email?: string; phoneNumber?: string }) => {
-    const asJson = await fetchUpgrade(`/users?login=${params.login}&password=${params.password}`);
+    const asJson = await fetchUpgrade(
+      `/api/users?login=${params.login}&password=${params.password}`
+    );
     const user = asJson[0];
     if (user) {
       throw new Error('Such user exists');
     }
-    await fetchUpgrade(`/users`, {
+    await fetchUpgrade(`/api/users`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

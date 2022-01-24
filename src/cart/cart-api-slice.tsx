@@ -4,7 +4,7 @@ import { TProduct } from '../products/types';
 
 export const cartApiSlice = createApi({
   reducerPath: 'cart',
-  baseQuery: fetchBaseQuery({ baseUrl: '/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
   tagTypes: ['Cart', 'Product'],
   endpoints: (builder) => ({
     getCart: builder.query<string[], string>({
