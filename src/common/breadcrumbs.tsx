@@ -9,7 +9,6 @@ import AllOutIcon from '@mui/icons-material/AllOut';
 
 export const Breadcrumb: React.FC<TProduct> = (data) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams.get('category'));
   return (
     <div role="presentation">
       <Breadcrumbs aria-label="breadcrumb">
