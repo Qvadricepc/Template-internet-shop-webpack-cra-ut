@@ -8,7 +8,7 @@ import { useRemoveCartMutation } from '../cart-api-slice';
 import { useUser } from '../../auth/hooks/use-user';
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

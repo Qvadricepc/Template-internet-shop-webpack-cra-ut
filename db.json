@@ -12,13 +12,25 @@
       "language": 2
     },
     {
-      "login": "vana",
-      "password": "111",
-      "id": "c0SwvLZ",
-      "name": "Vasa",
-      "surname": "Ivanov",
-      "birthday": "1990-10-26",
-      "language": 2
+      "login": "vasa",
+      "password": "11111",
+      "id": "QHk4a1L"
+    },
+    {
+      "login": "new",
+      "password": "123",
+      "id": "GdsQyva"
+    },
+    {
+      "login": "vbf",
+      "password": "1111",
+      "id": "sVzIVvc",
+      "name": "asdasdasasdas",
+      "surname": "asdasdasd",
+      "language": 2,
+      "birthday": "1990-10-12",
+      "email": "asdasdas",
+      "phoneNumber": "dsadasda"
     }
   ],
   "cart": [
@@ -28,13 +40,29 @@
     },
     {
       "productsId": [
-        "18"
+        "5",
+        "3"
       ],
       "id": "1"
     },
     {
-      "productsId": [],
-      "id": "c0SwvLZ"
+      "productsId": [
+        "23"
+      ],
+      "id": "QHk4a1L"
+    },
+    {
+      "productsId": [
+        "5"
+      ],
+      "id": "GdsQyva"
+    },
+    {
+      "productsId": [
+        "5",
+        "3"
+      ],
+      "id": "sVzIVvc"
     }
   ],
   "products": [

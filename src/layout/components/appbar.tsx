@@ -101,7 +101,7 @@ export const Appbar = () => {
       onClose={handleMenuClose}
     >
       <MenuItem
-        disabled={user.data ? true : false}
+        disabled={!!user.data}
         onClick={() => {
           handleMenuClose();
           navigate('/signin');
@@ -110,7 +110,7 @@ export const Appbar = () => {
         Sign in
       </MenuItem>
       <MenuItem
-        disabled={user.data ? true : false}
+        disabled={!!user.data}
         onClick={() => {
           handleMenuClose();
           navigate('/signup');
@@ -119,7 +119,7 @@ export const Appbar = () => {
         Sign up
       </MenuItem>
       <MenuItem
-        disabled={user.data ? false : true}
+        disabled={!user.data}
         onClick={() => {
           handleMenuClose();
           navigate('/profile');
@@ -128,7 +128,7 @@ export const Appbar = () => {
         My profile
       </MenuItem>
       <MenuItem
-        disabled={user.data ? false : true}
+        disabled={!user.data}
         onClick={() => {
           handleMenuClose();
           invalidateCart();

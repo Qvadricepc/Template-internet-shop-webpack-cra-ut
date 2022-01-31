@@ -4,7 +4,7 @@ import { productApiSlice } from '../product/product-api-slice';
 import searchReducer from '../layout/search-slice';
 import { cartApiSlice } from '../cart/cart-api-slice';
 import authReducer from '../auth/auth-slice';
-import * as localForage from 'localforage';
+import localForage from 'localforage';
 import { persistStore } from 'redux-persist';
 
 let enhancers;

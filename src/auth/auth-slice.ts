@@ -1,7 +1,7 @@
 import { TState } from './auth-types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import * as localForage from 'localforage';
+import localForage from 'localforage';
 import { persistReducer } from 'redux-persist';
 import { fetchUpgrade } from '../services/api';
 
@@ -30,6 +30,7 @@ export const getUserAsync = createAsyncThunk(
       try {
         currentUserCartAsJson = await fetchUpgrade(`/api/cart/${user.id}`);
       } catch (e) {
+        // @ts-ignore
         console.log(e.message);
         await fetchUpgrade(`/api/cart`, {
           method: 'POST',
@@ -48,7 +49,6 @@ export const getUserAsync = createAsyncThunk(
       const set = new Set();
       anonymousCartAsJson.productsId.forEach((id: string) => set.add(id));
       currentUserCartAsJson.productsId.forEach((id: string) => set.add(id));
-      // @ts-ignore
       const productsId = [...set];
       await fetchUpgrade(`/api/cart/0`, {
         method: 'PUT',
@@ -69,6 +69,7 @@ export const getUserAsync = createAsyncThunk(
         }),
       });
     } catch (e) {
+      // @ts-ignore
       console.log(e.message);
     }
 
@@ -145,7 +146,7 @@ export const authSlice = createSlice({
       .addCase(createUserAsync.pending, (state) => {
         state.user.isLoading = true;
       })
-      .addCase(createUserAsync.fulfilled, (state, action) => {
+      .addCase(createUserAsync.fulfilled, (state) => {
         state.user.isLoading = false;
         state.user.isError = false;
       })
