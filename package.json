@@ -40,7 +40,7 @@
     "prettier": "prettier \"packages/**/*.js|jsx|ts|tsx|vue\" --check",
     "prettier:fix": "yarn prettier -- --write",
     "lint": "yarn run lint:js && yarn run lint:css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -89,6 +89,7 @@
     "eslint-plugin-react": "^7.28.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.0",
+    "jest": "^27.5.1",
     "json-server": "^0.17.0",
     "lint-staged": "^12.0.2",
     "lodash-webpack-plugin": "^0.11.6",
